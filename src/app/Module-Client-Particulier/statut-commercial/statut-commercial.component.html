@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-6">
+        <p>Liste de l'ensemble des cliens au statut Commercial</p>
+    </div>
+    <div style="text-align: right;padding-top: 35px;" class="col">
+        <button style="background-color: peachpuff;" mat-button [matMenuTriggerFor]="animals">Filtrer les
+            resultats</button>
+        <mat-menu #animals="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="date">Flitrer par date</button>
+            <button mat-menu-item [matMenuTriggerFor]="ville">Filtrer par ville</button>
+            <button mat-menu-item [matMenuTriggerFor]="sexe">Filtrer par Sexe</button>
+            <button mat-menu-item [matMenuTriggerFor]="etat">Filtrer par Etat</button>
+            <button mat-menu-item [matMenuTriggerFor]="ville">Filtrer par region</button>
+        </mat-menu>
+
+        <mat-menu #date="matMenu">
+            <button mat-menu-item>Aujourd'hui</button>
+            <button mat-menu-item>Il y'a une semaine</button>
+            <button mat-menu-item>Il y'a deux semaine</button>
+            <button mat-menu-item>Il y'a un mois</button>
+            <button mat-menu-item>Il y'a deux mois</button>
+            <button mat-menu-item>Il y'a six mois</button>
+            <button mat-menu-item>Il y'a un an</button>
+            <button mat-menu-item>Il y'a deux ans</button>
+            <button mat-menu-item>Il y'a plus de deux ans</button>
+        </mat-menu>
+
+        <mat-menu #ville="matMenu">
+            <button mat-menu-item>Paris</button>
+            <button mat-menu-item>Lion</button>
+            <button mat-menu-item>Bordeaux</button>
+            <button mat-menu-item>Nice</button>
+            <button mat-menu-item>Marseille</button>
+            <button mat-menu-item>Poitouchen</button>
+            <button mat-menu-item>Valance</button>
+        </mat-menu>
+
+        <mat-menu #sexe="matMenu">
+            <button mat-menu-item>Masculin</button>
+            <button mat-menu-item>Feminin</button>
+        </mat-menu>
+
+        <mat-menu #etat="matMenu">
+            <button mat-menu-item>NRP</button>
+            <button mat-menu-item>Confirmé</button>
+            <button mat-menu-item>Indéci</button>
+            <button mat-menu-item>RDV</button>
+        </mat-menu>
+
+
+    </div>
+
+</div>
+
+<div *ngIf="datas" class="mat-elevation-z8">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Num fiscal</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">CP</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Tél</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+                <th scope="col">suprimmer</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let data of datas">
+                <th scope="row">{{data.id}}</th>
+                <td>Mark</td>
+                <td>Christian</td>
+                <td>548 OIUT</td>
+                <td>Paris 258</td>
+                <td>CP 5876d</td>
+                <td>Paris</td>
+                <td>+33 0458 30 26 5</td>
+                <td style="color: darkviolet;">{{data.completed}}</td>
+                <td>christian@gmail.com</td>
+                <td> <button (click)="onEditFiche()" mat-icon-button color="primary" class="example-icon"
+                        aria-label="Example icon-button with share icon">
+                        <mat-icon>edit</mat-icon>
+                    </button> </td>
+                <td> <button (click)="onSuprimmer()" mat-icon-button class="example-icon"
+                        aria-label="Example icon-button with share icon">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button> </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<div *ngIf="! datas" class="div_spinner">
+    <mat-spinner></mat-spinner>
+</div>

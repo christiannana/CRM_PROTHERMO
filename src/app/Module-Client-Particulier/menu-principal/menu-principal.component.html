@@ -1,0 +1,103 @@
+<div class="div1">
+
+    <mat-drawer-container class="example-container" autosize>
+        <mat-drawer #drawer  mode="side">
+            <mat-card class="example-card" style="background-color:rgb(51, 35, 161);margin-left: -10px;">
+                <mat-card-header>
+                  <mat-card-title><p>CRM PROTHERMO</p></mat-card-title>
+                  <mat-card-subtitle style="color: floralwhite;">Christian@faseya.com</mat-card-subtitle>
+                </mat-card-header>
+              </mat-card>
+              <div class="example-sidenav">
+            <mat-selection-list (click)="onDashboard()" #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>apps</mat-icon>
+                    <div class="sidetitle" mat-line>Dashboard</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>event_note</mat-icon>
+                    <div class="sidetitle" mat-line>Calendrier</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <mat-selection-list (click)="onCarte()" #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>maps</mat-icon>
+                    <div class="sidetitle" mat-line>Carte</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <br>
+              <p>Statut des clients</p>
+              <mat-divider></mat-divider>            
+              <mat-selection-list (click)="onClientLead()" #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>add_to_photos</mat-icon>
+                    <div class="sidetitle" mat-line>Lead</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <mat-selection-list (click)="onClientCommerciale()" #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>blur_linear</mat-icon>
+                    <div class="sidetitle" mat-line>Commercial</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <mat-selection-list (click)="onClientInstallation()" #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>done_all</mat-icon>
+                    <div class="sidetitle" mat-line>Installation</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <br>
+              <p>Mon compte</p>
+              <mat-divider></mat-divider>
+              <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>perm_identity</mat-icon>
+                    <div class="sidetitle" mat-line>Mon profil</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>settings</mat-icon>
+                    <div class="sidetitle" mat-line>Paramètres</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <mat-selection-list #shoes [multiple]="false">
+                <mat-list-option>
+                    <mat-icon mat-list-icon>lock</mat-icon>
+                    <div class="sidetitle" mat-line>Déconnection</div>
+                </mat-list-option>
+              </mat-selection-list>
+              <br>
+              <mat-divider></mat-divider>
+              <h5 style="color: rgb(196, 196, 240);">Copyright: Faseya 2020</h5>
+            </div>
+        </mat-drawer>
+
+        <mat-toolbar color="primary">
+            <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <span>Gestion des clients particuliers</span>
+            <span class="example-spacer"></span>
+           
+            <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+              <mat-icon>assignment_ind</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <!-- <div class="example-sidenav-content">
+            <button type="button" mat-button (click)="drawer.toggle()">
+                Toggle sdfgdfgdfgd
+            </button>
+        </div> -->
+
+        <div style="width: 99%">
+          <router-outlet></router-outlet>
+        </div>
+      
+
+    </mat-drawer-container>
+
+</div>

@@ -1,0 +1,98 @@
+
+<h2 mat-dialog-title>Ajout nouveau prospect</h2>
+<mat-dialog-content class="mat-typography">
+
+    <div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Prenom</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Numéro fiscal</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Référence de l’avis d’impôt </mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Adresse</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Code postal</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Ville</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Téléphone</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Placeholder"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Etat du prospect</mat-label>
+                <mat-select disableRipple>
+                  <mat-option value="1">Non assigné</mat-option>
+                  <mat-option value="2">Nouveau</mat-option>
+                  <mat-option value="3">NRP</mat-option>
+                  <mat-option value="3">A rappeler / En attente</mat-option>
+                  <mat-option value="3">En attente </mat-option>
+                  <mat-option value="3">Annulé pas intéressé </mat-option>
+                  <mat-option value="3">Passé en confirmation </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <br>
+        <input  type="file" style="color: rgb(3, 12, 126);"placeholder="Document"/>
+        <br> <br>
+
+    </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button style="color: red;background-color: wheat;margin: 15px;" mat-button mat-dialog-close>Annuler</button>
+    <!-- <button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Ajouter le client</button> -->
+    <button mat-raised-button color="primary">Ajouter le client</button>
+</mat-dialog-actions>

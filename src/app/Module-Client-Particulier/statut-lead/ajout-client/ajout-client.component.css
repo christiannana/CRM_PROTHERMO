@@ -1,0 +1,19 @@
+p{
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px;
+    color: darkblue;
+}
+
+input{
+    font-weight: bold;
+}
+mat-form-field{
+    color: rgb(15, 14, 11);
+    width: 700px;
+  
+}
+.file-select-button, .file-name {
+    display: inline-block;
+    margin: 8px;
+  }

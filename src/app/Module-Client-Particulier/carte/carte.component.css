@@ -1,0 +1,12 @@
+p{
+    font-weight: bold;
+    font-size: 20px;
+    margin: 40px;
+    color: darkblue;
+}
+
+img{
+    margin: 20px;
+    width: 95%;
+    height: max-content;
+}

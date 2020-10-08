@@ -1,0 +1,45 @@
+<div id="container1">
+  <p class="slogan1">Designed by Faseya</p>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+
+      </div>
+      <div class="col-sm">
+      
+
+        <mat-card class="example-card">
+
+          <mat-card-content>
+            <img height="50" style="text-align: center;right: 0;left: 0;position: relative;margin-left: 160px;" src="https://prothermo.fr/wp-content/uploads/2020/09/Logo-1024x590.png" >
+            <!-- <p style="text-align: center;font-weight: bold;font-size: 20px;">CRM PROTHERMO</p> -->
+            <br>  <br>
+            <br>
+            <div class="example-container">
+              <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>Adresse mail</mat-label>
+                <input matInput type="mail"  required>
+              </mat-form-field>
+              <br>
+              <mat-form-field style="width: 100%;" appearance="fill">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput type="password" required>
+                <mat-icon matSuffix>visibility_off</mat-icon>
+              </mat-form-field>
+              <br>
+              <button  [routerLink]="['/menuprincipal']"  mat-raised-button color="primary">SE CONNECTER</button>
+              <br><br>
+              <p style="text-align: center;">Mot de passe oublié ?</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      
+      </div>
+      <div class="col-sm">
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,59 @@
+<div id="container1">
+
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+
+                <mat-card class="example-card">
+                    <div style="text-align: right;margin-left: 10px; position: fixed;">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>menu</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button [routerLink]="['/login']"  mat-menu-item>
+                              <mat-icon>lock</mat-icon>
+                              <span>Se déconnecter</span>
+                            </button>
+                            <!-- <button mat-menu-item >
+                              <mat-icon>person</mat-icon>
+                              <span>Mon profil</span>
+                            </button>
+                            <button mat-menu-item>
+                              <mat-icon>notifications_off</mat-icon>
+                              <span>Disable alerts</span>
+                            </button> -->
+                          </mat-menu>
+                    </div>
+                    <mat-card-content>
+                        <br/>
+                        <p style="text-align: center;font-weight: bold;font-size: 20px;">CRM PROTHERMO </p>
+                        <p style="text-align: center;color:darkslategrey; font-size: 13px;margin-bottom: -20px;">Plateforme de gestion centraliée de la relation cliente. </p>
+
+                        <mat-grid-list cols="2">
+                            <mat-grid-tile>
+                                <mat-card (click)="onParticulier()" class="card-button"> 
+                                    <span style="font-size: 10;">Clients </span>
+                                    <h2>Particuliers </h2>
+                                </mat-card>
+                            </mat-grid-tile>
+                            <mat-grid-tile> 
+                                <mat-card (click)="onProfessionnel()" class="card-button">
+                                    <span style="font-size: 10;">Clients </span>
+                                    <h2>Professionnels </h2>
+                                </mat-card>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </mat-card-content>
+                </mat-card>
+
+            </div>
+            <div class="col-sm">                    
+            </div>
+        </div>
+    </div>
+
+</div>
