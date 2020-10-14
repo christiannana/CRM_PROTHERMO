@@ -39,5 +39,8 @@ onCarte(){
     this.route.navigate(['statut-lead'], { relativeTo: this.routeCon });
   }
 
+  onCalendrier(){
+    this.route.navigate(['calendrier'], { relativeTo: this.routeCon });
+  }
 
 }

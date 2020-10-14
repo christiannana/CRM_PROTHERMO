@@ -8,11 +8,12 @@ import { CarteComponent } from './carte/carte.component';
 import { SuprimmerClientComponent } from './statut-lead/suprimmer-client/suprimmer-client.component';
 import { ModifierFicheClientComponent } from './statut-lead/modifier-fiche-client/modifier-fiche-client.component';
 import { AjoutClientComponent } from './statut-lead/statut-lead.component';
+import { CalendrierComponent } from './calendrier/calendrier.component';
 
 
 
 @NgModule({
-  declarations: [MenuPrincipalComponent, ClientParticulierComponent, CarteComponent, AjoutClientComponent, SuprimmerClientComponent, ModifierFicheClientComponent],
+  declarations: [MenuPrincipalComponent, ClientParticulierComponent, CarteComponent, AjoutClientComponent, SuprimmerClientComponent, ModifierFicheClientComponent, CalendrierComponent],
   imports: [
     CommonModule,
     ModuleParticulierRoutingModule,

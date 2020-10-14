@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -10,11 +11,8 @@ export class APIServiceService {
 
   constructor(private http: HttpClient) { }
 
-
-  
-
-onJSONplaceHolder() {
-  return this.http.get(this.configUrl);
-}
+  onJSONplaceHolder() {
+    return this.http.get(this.configUrl);
+  }
 
 }

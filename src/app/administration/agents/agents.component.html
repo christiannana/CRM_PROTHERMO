@@ -1,7 +1,8 @@
 
+
 <div class="row">
     <div class="col-6">
-        <p>Liste de l'ensemble des clients au statut Lead</p>
+        <p>Liste de l'ensemble des agents</p>
     </div>
     <div  style="text-align: right;padding-top: 35px;" class="col">
         <button style="background-color: peachpuff;" mat-button [matMenuTriggerFor]="animals">Filtrer les resultats</button>
@@ -50,33 +51,33 @@
        
     </div>
     <div style="text-align: right;padding: 35px;" class="col">
-        <button (click)="openDialog()" mat-raised-button color="primary">Ajout nouveau client</button>
+        <button (click)="openDialog()" mat-raised-button color="primary">Ajout nouveau agent</button>
     </div>
   </div>
-
-<div  *ngIf="datas" class="mat-elevation-z8">
+  
+  <div  *ngIf="datas" class="mat-elevation-z8">
     <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prenom</th>
-            <th scope="col">Num fiscal</th>
-            <th scope="col">Adresse</th>
-            <th scope="col">CP</th>
-            <th scope="col">Ville</th>
-            <th scope="col">Tél</th>
-            <th scope="col">Etat</th>
-            <th scope="col">Email</th>          
-            <th scope="col">Action</th>
-            <th scope="col">suprimmer</th>
+              <th scope="col">#</th>
+              <th scope="col">Produit</th>
+              <th scope="col">nom</th>
+              <th scope="col">Description</th>
+              <th scope="col">Référence</th>
+              <th scope="col">Marque</th>
+              <th scope="col">Catégorie</th>
+              <th scope="col">Commentaire</th>
+              <th scope="col">Prix D'achat</th>
+              <th scope="col">Prix de vente </th>          
+              <th scope="col">Action</th>
+              <th scope="col">suprimmer</th>
           </tr>
         </thead>
         <tbody>
           
             <tr *ngFor="let data of datas">
               <th scope="row">{{data.id}}</th>
-              <td>Mark</td>
+              <td><img height="60" src="https://cdn.pixabay.com/photo/2017/11/02/14/26/model-2911329__340.jpg"/> </td>
               <td>Christian</td>
               <td>548 OIUT</td>             
               <td>Paris 258</td>
@@ -88,7 +89,7 @@
               <td>  <button (click)="onEditFiche()" mat-icon-button color="primary" class="example-icon" aria-label="Example icon-button with share icon">
                 <mat-icon>edit</mat-icon>
               </button> </td>
-              <td >  <button (click)="onSuprimmer()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+              <td>  <button (click)="onSuprimmer()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
                 <mat-icon>delete_outline</mat-icon>
               </button> </td>
             </tr>
@@ -98,7 +99,8 @@
       </table>
   </div>
   
-
+  
   <div *ngIf="! datas" class="div_spinner" >    
       <mat-spinner></mat-spinner>
   </div>
+

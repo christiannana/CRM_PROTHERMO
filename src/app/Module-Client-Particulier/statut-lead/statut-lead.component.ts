@@ -1,10 +1,11 @@
-import { Component, OnInit,  } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { APIServiceService } from 'src/app/Services/api/api-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -38,14 +39,14 @@ export class StatutLeadComponent implements AfterViewInit {
     });
   }
 
-    onSuprimmer(){
-      alert('Fiche client suprimmée.')
-    }
-    onEditFiche(){
-      setTimeout(()=>{
-        this.route.navigateByUrl('modifier_fiche_client', {relativeTo: this.routeCon})
-      },500)
-    }
+  onSuprimmer() {
+    alert('Fiche client suprimmée.')
+  }
+  onEditFiche() {
+    setTimeout(() => {
+      this.route.navigateByUrl('modifier_fiche_client', { relativeTo: this.routeCon })
+    }, 500)
+  }
 
 }
 
@@ -64,26 +65,16 @@ export interface PeriodicElement {
   styleUrls: ['./ajout-client/ajout-client.component.css']
 })
 export class AjoutClientComponent implements OnInit {
-  
-  @ViewChild('fileInput')
-  fileInput;
 
-  file: File | null = null;
-
-  constructor() { }
-
-  onClickFileInputButton(): void {
-    this.fileInput.nativeElement.click();
-  }
-
-  onChangeFileInput(): void {
-    const files: { [key: string]: File } = this.fileInput.nativeElement.files;
-    this.file = files[0];
-  }
-
+  constructor( private http: HttpClient) { }
 
 
   ngOnInit(): void {
   }
 
+
+
+
+
+  
 }

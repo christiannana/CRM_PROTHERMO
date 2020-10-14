@@ -421,15 +421,20 @@
 
                         <p>Documents client/prospect</p>
                         <br>
-                        <div class="import_fiche" style="height: 250px;text-align: center;padding-top: 100px; border-width: 1px;border-style: solid;border-radius: 15px;">
-                            <h2>Glissez vos fichiers a ajouter ici.</h2>
-                        </div>
-                        
+ 
+                        <ngx-dropzone  class="import_fiche" style="height: 250px" (change)="onSelect($event)">                       
+                          <ngx-dropzone-label>Glissez vos fichiers a ajouter ici.</ngx-dropzone-label>                       
+                          <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">                       
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>                        
+                          </ngx-dropzone-preview>                       
+                        </ngx-dropzone>
+                      
                         <mat-icon style="font-size: 100px; margin: 45px;" color="primary" class="example-tab-icon">description</mat-icon>
                         <mat-icon style="font-size: 100px; margin: 45px;" color="primary" class="example-tab-icon">description</mat-icon>
                         <mat-icon style="font-size: 100px; margin: 45px;" color="primary" class="example-tab-icon">description</mat-icon>
                         <mat-icon style="font-size: 100px; margin: 45px;" color="primary" class="example-tab-icon">description</mat-icon>
                     </mat-tab>
+
                     <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon color="primary" class="example-tab-icon">create</mat-icon>

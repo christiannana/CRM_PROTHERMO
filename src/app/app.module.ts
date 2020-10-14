@@ -22,14 +22,22 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
+//import { NgxDropzoneModule } from 'ngx-dropzone/lib/ngx-dropzone.module';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminModuleComponent } from './administration/administration-routing.module';
+
 
 
 @NgModule({
-  declarations: [
+  declarations: [ AdminModuleComponent,
     AppComponent,
     BaseComponents, 
   ],
@@ -41,6 +49,9 @@ import {MatTabsModule} from '@angular/material/tabs';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgxDropzoneModule,  
+
+
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
@@ -57,10 +68,18 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatTableModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatTabsModule,  
+    MatTabsModule,
+    MatExpansionModule,
+    
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    
+    NgbModule,  
   ],
-  providers: [],
-  bootstrap: [AppComponent, 
+  providers: [
+  //  { provider: LocationStrategy,   useClass: HashLocationStrategy }
+   {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true,}}
+  ],
+  bootstrap: [AppComponent,
    BaseComponents]
 })
 export class AppModule { }
