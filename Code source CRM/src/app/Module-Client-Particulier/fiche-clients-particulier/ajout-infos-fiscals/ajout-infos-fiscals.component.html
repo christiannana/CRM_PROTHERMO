@@ -1,0 +1,64 @@
+
+
+
+<h2 mat-dialog-title>Ajout Informations Fiscales</h2>
+<mat-dialog-content class="mat-typography">
+
+    <div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Numéro Fiscall</mat-label>
+                <input name="num_fisc" [(ngModel)]="num_fisc" matInput placeholder="Numéro Fiscal"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Référence</mat-label>
+                <input name="ref" [(ngModel)]="ref" matInput placeholder="ref"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>avis</mat-label>
+                <input name="avis" [(ngModel)]="avis" matInput placeholder="avis"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>intitule</mat-label>
+                <input name="intitule" [(ngModel)]="intitule" matInput placeholder="intitule"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+        </div>
+           <br> 
+           <div>
+            <mat-form-field appearance="outline">
+                <mat-label>description</mat-label>
+                <input name="description" [(ngModel)]="description" matInput placeholder="description"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+        </div>
+       
+    </div>
+
+   
+    <br>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button style="color: red;background-color: wheat;margin: 15px;" mat-button mat-dialog-close>Annuler</button>
+    <!-- <button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Ajouter le client</button> -->
+    <button  mat-raised-button color="primary" (click)="onRegister_Infos_Fiscal()">Ajouter infos fiscales</button>
+</mat-dialog-actions>

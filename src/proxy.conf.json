@@ -1,0 +1,8 @@
+
+{
+    "/api/*": {
+        "target": "http://prothermo.faseya-dev.com:8080/Crm_Prothermo-0.0.1-SNAPSHOT/prothermo/api/",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

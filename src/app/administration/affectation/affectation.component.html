@@ -1,0 +1,193 @@
+<mat-card>
+
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon color="primary" class="example-tab-icon">account_box</mat-icon>
+        Clients Internes non affectés
+      </ng-template>
+
+      <div class="container">
+      </div>
+      <div class="row">
+
+        <div style="text-align: left;padding: 35px 0px 30px 45px;" class="col">
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="animals">Affecter a un agent</button>
+          <mat-menu #animals="matMenu">
+            <div *ngFor="let data of datas_agent">
+              <button (click)="onAffectation_client(data)" mat-menu-item><span matBadge="{{data.nbre_tache}}"
+                  matBadgeColor="accent" matBadgeOverlap="false"> {{data.prenom}} {{data.nom}}</span></button>
+            </div>
+          </mat-menu>
+
+          <mat-menu #date="matMenu">
+            <button mat-menu-item matBadge="7">
+              Hide
+            </button>
+            <button mat-menu-item>Aujourd'hui</button>
+            <button matBadge="8" matBadge="7" mat-menu-item>Il y'a une semaine</button>
+            <button mat-menu-item>Il y'a deux semaine</button>
+            <button mat-menu-item><span matBadge="1" matBadgeSize="large">Text with large badge</span></button>
+            <button mat-menu-item>Il y'a deux mois</button>
+            <button mat-menu-item>Il y'a six mois</button>
+            <button mat-menu-item><span matBadge="4" matBadgeOverlap="false">Text with a badge</span></button>
+            <button mat-menu-item>Il y'a deux ans</button>
+            <button mat-menu-item>Il y'a plus de deux ans</button>
+            <button mat-menu-item>Il y'a deux mois</button>
+            <button mat-menu-item>Il y'a six mois</button>
+            <button mat-menu-item>Il y'a un an</button>
+            <button mat-menu-item>Il y'a deux ans</button>
+            <button mat-menu-item>Il y'a plus de deux ans</button>
+          </mat-menu>
+
+          <mat-menu #ville="matMenu">
+            <button mat-menu-item>Paris</button>
+            <button mat-menu-item>Lion</button>
+            <button mat-menu-item>Bordeaux</button>
+            <button mat-menu-item>Nice</button>
+            <button mat-menu-item>Marseille</button>
+            <button mat-menu-item>Poitouchen</button>
+            <button mat-menu-item>Valance</button>
+          </mat-menu>
+
+          <mat-menu #sexe="matMenu">
+            <button mat-menu-item>Masculin</button>
+            <button mat-menu-item>Feminin</button>
+          </mat-menu>
+
+          <mat-menu #etat="matMenu">
+            <button mat-menu-item>NRP</button>
+            <button mat-menu-item>Confirmé</button>
+            <button mat-menu-item>Indéci</button>
+            <button mat-menu-item>RDV</button>
+          </mat-menu>
+
+
+        </div>
+
+        <div style="text-align: right;" class="col-8">
+          <!-- <div class="col-md-8 form-group">        
+                  <input type="file" class="form-control" (change)="onImport_Excel($event)" placeholder="Upload file" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">        
+                </div> -->
+          <ngx-dropzone (change)="onImport_Excel($event)" class="import_fiche"
+            style="text-align: right;margin-top:35px;height: 40px;width: 250px; background-color: rgb(225, 247, 193);"
+            accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            <ngx-dropzone-label> Importer un fichier Excel</ngx-dropzone-label>
+          </ngx-dropzone>
+          <div style="margin-top: 10px;" *ngIf="progresse">
+            <h5>Veuillez patienter...</h5>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div *ngIf="datas_client" class="mat-elevation-z8">
+        <table  class="table  table-striped table-bordered table-sm row-border hover mat-elevation-z8" datatable [dtOptions]="dtOptions">
+          <thead  style="background-color: rgb(51, 35, 161);color: floralwhite;"> 
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">Proprie/Loca</th>
+              <th scope="col">type logement</th>
+              <th scope="col">status pro</th>
+              <th scope="col">systeme de chauffage</th>
+              <th scope="col">prenom</th>
+              <th scope="col">ville</th>
+              <th scope="col">CP</th>
+              <th scope="col">telephone</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let data of datas_client">
+              <td>
+                <mat-checkbox [(ngModel)]="data.user_id_Rdv" (change)="onSelection_agnet(data)" style="margin: 15px;"
+                  color="primary" class="example-margin"></mat-checkbox>
+              </td>
+              <td>{{data.created_time | date: 'dd/MM/yyyy' }}</td>
+              <td>{{data.proprietaire_ou_locataire}}</td>
+              <td>{{data.type_de_logement}}</td>
+              <td>{{data.statut_professionnel}}</td>
+              <td>{{data.systeme_chauffage_principal}}</td>
+              <td>{{data.nom}}</td>
+              <td>{{data.ville}}</td>
+              <td style="color: darkviolet;">{{data.cp}}</td>
+              <td>{{data.telephone}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon color="primary" class="example-tab-icon">event_note</mat-icon>
+        Clients Regies non affectés
+      </ng-template>
+      <br><br>
+      <div style="margin-left: 15px;">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="animals">Affecter a un confirmateur</button>
+        <mat-menu #animals="matMenu">
+          <div *ngFor="let data of datas_agent">
+            <button (click)="onAffectation_client(data)" mat-menu-item><span matBadge="{{data.nbre_tache}}"
+                matBadgeColor="accent" matBadgeOverlap="false"> {{data.prenom}} {{data.nom}}</span></button>
+          </div>
+        </mat-menu>
+      </div>
+      <br>
+      <div class="mat-elevation-z8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prenom</th>
+              <th scope="col">Tél</th>
+              <th scope="col">CP</th>
+              <th scope="col">Type de logement</th>
+              <th scope="col">Statut pro</th>
+              <th scope="col">Chauffage</th>
+              <th scope="col">Ville</th>
+              <th scope="col">Etat</th>
+              <!-- <th scope="col">suprimmer</th> -->
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let data of clientDatasRegie">
+              <td>
+                <mat-checkbox [(ngModel)]="data.user_id_Rdv" (change)="onSelection_agnet(data)" style="margin: 15px;"
+                  color="primary" class="example-margin"></mat-checkbox>
+              </td>
+              <td>{{data.created_time | date: 'dd/MM/yyyy'}}</td>
+              <td>{{data.nom}}</td>
+              <td>{{data.prenom}}</td>
+              <td>{{data.telephone}}</td>
+              <td>{{data.cp}}</td>
+              <td>{{data.type_de_logement}}</td>
+              <td>{{data.statut_professionnel}}</td>
+              <td>{{data.systeme_chauffage_principal}}</td>
+              <td>{{data.ville}}</td>
+              <td style="color: darkviolet;">{{data.etat_Lead}}</td>
+              <!-- <td> <button (click)="onEditFiche(data)" mat-icon-button color="primary" class="example-icon"
+                  aria-label="Example icon-button with share icon">
+                  <mat-icon>edit</mat-icon>
+                </button> </td> -->
+              <!-- <td >  <button [swal]="deleteSwal"  (confirm)="onGet_Delete_Client(data)" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button> </td> -->
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

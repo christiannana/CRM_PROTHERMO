@@ -1,0 +1,31 @@
+
+mat-form-field, button{
+  width: 100%;
+  font-weight: bold;
+  color: rgb(27, 12, 41);
+}
+mat-card{
+  margin-top: 40%;
+  color: rgb(109, 5, 206);
+  width: 450px;
+  border-radius: 15px;
+  /* background-color: chartreuse; */
+}
+
+#container1 {
+  background-image: url("https://media.istockphoto.com/photos/blue-color-book-cover-pattern-picture-id1170740815?b=1&k=6&m=1170740815&s=170667a&w=0&h=4xVB3o8bR_38GreLiftbbgsk-Zh4pKI1FKcoKEGaSSc=");
+  height: 100%;
+  opacity: 1;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgb(2, 15, 59);
+}
+
+.slogan1{
+  right: 0;left: 0;
+  text-align: center;
+  position: absolute;
+  color: azure;
+  bottom: 20px;
+  
+}

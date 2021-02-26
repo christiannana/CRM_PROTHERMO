@@ -1,0 +1,151 @@
+
+<mat-toolbar color="primary">
+    <button (click)="goBack() " mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Enregistrement  d'un nouveau client </span>
+    <span class="example-spacer"></span>
+
+ 
+</mat-toolbar>
+
+<br><br>
+<div class="row">
+                          
+    <div class="col">
+       
+    </div>   
+    <div class="col">
+
+    <div>
+  
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input name="nom" [(ngModel)]="nom" matInput placeholder="nom"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>prenom</mat-label>
+                <input name="prenom" [(ngModel)]="prenom" matInput placeholder="prenom"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Adresse</mat-label>
+                <input name="addresse" [(ngModel)]="addresse" matInput placeholder="Adresse"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>      
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Ville</mat-label>
+                <input name="ville" [(ngModel)]="ville" matInput placeholder="Ville"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Téléphone</mat-label>
+                <input name="telephone" [(ngModel)]="telephone" matInput placeholder="Téléphone"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Code postal</mat-label>
+                <input (change)="onZone_Seach()" name="cp" [(ngModel)]="cp" matInput placeholder="Code postal"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>précarité</mat-label>
+                <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="precarite" [(ngModel)]="precarite"  disableRipple>
+                    <mat-option value="GP">GP</mat-option>
+                    <mat-option value="P">P</mat-option>
+                    <mat-option value="CL">CL</mat-option>
+                    <mat-option value="CL+">CL+</mat-option> 
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Statut marital</mat-label>
+                <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="statut_marital" [(ngModel)]="statut_marital"  disableRipple>
+                    <mat-option value="célibataire">Célibataire </mat-option>
+                    <mat-option value="concubinage">Concubinage</mat-option>
+                    <mat-option value="concubinage">Mariée</mat-option>
+                    <mat-option value="veuf">Veuf</mat-option> 
+                    <mat-option value="divorcé">Divorcé</mat-option> 
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Zone</mat-label>
+                <mat-select  name="zone" [(ngModel)]="zone" style="font-weight: bold;color: rgb(5, 5, 141);"  disableRipple>
+                <div *ngFor="let data of zone_choix">
+                    <mat-option value="{{data.zonage}}">{{data.zonage }} ({{ data.nom_commune }})</mat-option>
+                </div>
+                                     
+                </mat-select>
+            </mat-form-field>
+        </div> 
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Type de logement </mat-label>
+                <input name="type_de_logement" [(ngModel)]="type_de_logement"  matInput placeholder="Systeme chauffage principal"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>     
+       
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Systeme de chauffage principal </mat-label>
+                <input name="systeme_chauffage_principal" [(ngModel)]=" systeme_chauffage_principal"  matInput placeholder="Systeme de chauffage principal"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Statut professionnel </mat-label>
+                <input name="statut_professionnel" [(ngModel)]="statut_professionnel"  matInput placeholder="Statut professionnel"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Projet </mat-label>
+                <input name="projet" [(ngModel)]="projet"  matInput placeholder="Statut professionnel"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Télé opérateur </mat-label>
+                <input name="vmc2" [(ngModel)]="vmc2"  matInput placeholder="Statut professionnel"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+       
+       
+        <br>
+        <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+        <br>
+       <div style="text-align: right;">
+        <button (click)="onClient_Registration()" mat-raised-button color="primary">Ajout nouveau client</button>
+        <br> <br><br><br>
+       </div>
+    </div>
+    </div> 
+    <div class="col">
+       
+    </div>    
+        
+</div>

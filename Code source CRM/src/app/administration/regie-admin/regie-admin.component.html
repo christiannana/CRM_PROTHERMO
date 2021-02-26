@@ -1,0 +1,86 @@
+
+
+<div class="row">
+    <div class="col-6">
+        <p>Liste des clients Regie affectés </p>
+    </div> 
+    <div style="text-align: right;padding: 35px;" class="col">      
+    </div>
+    <div  style="text-align: right;padding-top: 35px;" class="col">
+        <button style="background-color: peachpuff;" mat-button [matMenuTriggerFor]="animals">Filtrer les resultats</button>
+        <mat-menu #animals="matMenu">
+          <button mat-menu-item >Flitrer par date</button>
+          <button mat-menu-item >Filtrer par ville</button>
+          <button mat-menu-item >Filtrer par region</button>
+        </mat-menu>     
+    </div>
+   
+  </div>
+
+<div  class="mat-elevation-z8">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prenom</th>
+              <th scope="col">Tél</th>
+              <th scope="col">CP</th>
+              <th scope="col">Ville</th>
+              <th scope="col">Confirmateur</th>
+              <th scope="col">Télé-opérateur</th>
+              <th scope="col">Chauffage</th>
+              <th scope="col">D modification</th>     
+              <th scope="col">Etat</th>             
+              <th scope="col">Action</th>
+            <th scope="col">suprimmer</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr *ngFor="let data of clientDatas" >
+              
+              <td>{{data.created_time | date: 'dd/MM/yyyy'}}</td>
+              <td>{{data.nom}}</td>
+              <td>{{data.prenom}}</td>
+              <td>{{data.telephone}}</td>   
+              <td>{{data.cp}}</td>
+              <td>{{data.ville}}</td>
+              <td style="color: rgb(4, 2, 175);" >{{data.username_affected}}</td>      
+                          
+              <td>{{data.vmc2}}</td>
+              <td>{{data.systeme_chauffage_principal}}</td>
+              
+              <td>{{data.date_traitement | date: 'dd/MM/yyyy'}}</td>
+              <td [ngStyle]="{backgroundColor: data.color}">{{data.etat_Lead}}</td>
+                      
+              <td>  <button (click)="onEditFiche(data)" mat-icon-button color="primary" class="example-icon" aria-label="Example icon-button with share icon">
+                <mat-icon>edit</mat-icon>
+              </button> </td>
+              <td >  <button [swal]="deleteSwal"  (confirm)="onGet_Delete_Client(data)" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                <mat-icon>delete_outline</mat-icon>
+              </button> </td>
+            </tr>
+          
+        </tbody>
+      </table>
+  </div>
+  
+  <div *ngIf="! clientDatas" class="div_spinner" >    
+      <mat-spinner></mat-spinner>
+  </div>
+
+  <swal
+  #deleteSwal
+  title="Confirmation"
+  text="Voulez vous vraiment suprimmer cette fiche ?"
+  icon="question"
+  allowOutsideClick= "false"
+  confirmButtonText = "Suprimmer la fiche"
+  cancelButtonText = "Annuler"
+  cancelButtonColor = "red"
+  [showCancelButton]="true"
+  [focusCancel]="true"
+ >
+</swal>
+

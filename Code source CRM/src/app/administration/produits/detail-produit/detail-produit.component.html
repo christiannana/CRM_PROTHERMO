@@ -1,0 +1,187 @@
+
+<swal
+#deleteSwal
+title="Confirmation"
+text="Voulez vous Enregistrer les modifications ?"
+icon="question"
+allowOutsideClick= "false"
+confirmButtonText = "Enregistrer"
+cancelButtonText = "Annuler"
+cancelButtonColor = "red"
+[showCancelButton]="true"
+[focusCancel]="true"
+>
+</swal>
+
+<swal
+#deleteFiche
+title="Confirmation"
+text="Voulez vous Supprimer cette fiche ?"
+icon="question"
+allowOutsideClick= "false"
+confirmButtonText = "Supprimer"
+cancelButtonText = "Annuler"
+cancelButtonColor = "red"
+[showCancelButton]="true"
+[focusCancel]="true"
+>
+</swal>
+
+
+<mat-toolbar color="primary">
+    <button (click)="goBack() " mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Detail fiche produit</span>
+    <span class="example-spacer"></span>
+
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>assignment_ind</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+
+<div class="row">
+    <!-- <div class="col-3">
+       
+    </div> -->
+    <div  style="text-align: right;padding-top: 35px;" class="col-5">    
+        <mat-card>
+
+          
+<mat-dialog-content class="mat-typography">
+   <p>Information sur le produit</p>
+    <div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Identifiant Produit</mat-label>
+                <input name="id_produit" [(ngModel)]="id_produit" matInput placeholder="Identifiant"  required >
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>nom</mat-label>
+                <input name="nom" [(ngModel)]="nom" matInput placeholder="nom"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input name="description" [(ngModel)]="description" matInput placeholder="Description"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Référence </mat-label>
+                <input name="reference" [(ngModel)]="reference" matInput placeholder="Référence"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Marque</mat-label>
+                <input name="marque" [(ngModel)]="marque" matInput placeholder="Marque"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Catégorie</mat-label>
+                <input name="categorie" [(ngModel)]="categorie" matInput placeholder="Catégorie"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Commantaire</mat-label>
+                <input name="commentaire" [(ngModel)]="commentaire" matInput placeholder="Commantaire"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Prix d'achat</mat-label>
+                <input name="prix_achat" [(ngModel)]="prix_achat" matInput placeholder="achat"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Prix de vente</mat-label>
+                <input name="prix_vente_ref" [(ngModel)]="prix_vente_ref" matInput placeholder="Commantaire"  required >
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </div>
+      
+        
+        <br>
+        <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+        <br> 
+  
+    </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button style="color: red;background-color: wheat;margin: 15px;" mat-button mat-dialog-close>Annuler</button>
+    <!-- <button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Ajouter le client</button> -->
+    <button [swal]="deleteSwal" (confirm)="onProduit_Update()"  mat-raised-button color="primary">Enregistrer les modifications</button>
+</mat-dialog-actions>
+            
+        </mat-card>
+
+    </div>
+    <div style="text-align: right;padding: 35px;" class="col">
+
+        <p>Information sur la fiche technique du produit </p>
+        <br>
+
+
+        <br>
+        <ngx-dropzone class="import_fiche" style="height: 150px; background-color: rgb(253, 253, 196);" (change)="onSelect($event)">
+            <ngx-dropzone-label>Glissez la fiche tecnique ici pour ajouter.</ngx-dropzone-label>
+            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" style="height: 70px"
+                (removed)="onRemove(f)">
+                <ngx-dropzone-label style="font-size: 12px;"> {{ f.name }} </ngx-dropzone-label>
+            </ngx-dropzone-preview>
+        </ngx-dropzone>
+       
+        <br> <br>
+       
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>                   
+                    <th scope="col">Nom document</th>
+                    <th scope="col">Type de fichier</th>                  
+                    <th scope="col">Télécharger</th>
+                     <th scope="col">supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of documents_Data">
+                    <td>{{data.id}}</td>
+                    <td>{{data.fileName}}</td>
+                    <td>{{data.fileType}}</td>
+                    <td> <button (click)="onDocument_Download_All(data)" mat-icon-button
+                            class="example-icon"
+                            aria-label="Example icon-button with share icon">
+                            <mat-icon>cloud_download</mat-icon>
+                        </button> </td>
+                   <td > <button  [swal]="deleteFiche"  (confirm)="onGet_Delete_Fiche(data)" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                            <mat-icon>delete_outline</mat-icon>
+                          </button> </td>
+
+                </tr>
+            </tbody>
+        </table>   
+
+   </div>
+</div>

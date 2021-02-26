@@ -1,0 +1,1600 @@
+<swal #deleteSwal title="Confirmation" text="Voulez vous vraiment modifier cette fiche ?" icon="question"
+    allowOutsideClick="false" confirmButtonText="Modifier la fiche" cancelButtonText="Annuler" cancelButtonColor="red"
+    [showCancelButton]="true" [focusCancel]="true">
+</swal>
+
+<swal #deleteProduit title="Confirmation" text="Vous allez suprimer ce produit de la liste ?" icon="question"
+    allowOutsideClick="false" confirmButtonText="Suprimer ce produit" cancelButtonText="Annuler" cancelButtonColor="red"
+    [showCancelButton]="true" [focusCancel]="true">
+</swal>
+
+
+<ng-sidebar-container showBackdrop="true" style="height: 100%;width: 100%;">
+
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" position="bottom" showBackdrop="true" closeOnClickBackdrop="true"
+        closeOnClickOutside="true" style=" width: 700px;height: 500px;">
+        <div
+            style="background-color: cornsilk;width: 700px;height: 500px;padding: 30px;border-style: solid;border-width: 15px;border-color: darkcyan;overflow-y: scroll;">
+
+            <div *ngIf="etat_lead == 'A rappeler / En attente' ">
+                <h3>Etat en Rappeler heure et date du rappel</h3>
+                <mat-form-field appearance="outline">
+                    <mat-label>Date du rappel</mat-label>
+                    <input name="Datenotification" [(ngModel)]="Datenotification" matInput placeholder="date"
+                        type="date" required>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Heure du rappel</mat-label>
+                    <input name="Heurenotification" [(ngModel)]="Heurenotification" matInput placeholder="heure"
+                        type="time" required>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+                <!-- <mat-form-field appearance="fill">
+                    <mat-label>Choisir un type de notificationmailMessage</mat-label>
+                    <mat-select  name="Typenotification" [(ngModel)]="Typenotification" style="font-weight: bold;color: rgb(5, 5, 141);" >
+                        <mat-option value="NRP">Me notifier par mail</mat-option>
+                        <mat-option value="A rappeler / En attente">Me notifier par SMS</mat-option>
+                        <mat-option value="En attente">Me notifier par Bip </mat-option>
+                        <mat-option value="Annulé pas intéressé">Me notifier par Push </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <br /> <br />
+
+            </div>
+
+            <div *ngIf="etat_lead == 'Annulé pas intéressé' ">
+                <h3>Etat Annuler: ajouter un commentaire</h3>
+                <mat-form-field appearance="fill">
+                    <mat-label>Ajouter votre commentaire ici</mat-label>
+                    <textarea matInput name="commentaire" [(ngModel)]="commentaire"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="etat_lead == 'Passé en confirmation' ">
+                <h3>Etat en Rendez-vous: ajouter un mail et date du rendez-vous</h3>
+                <mat-form-field appearance="outline">
+                    <mat-label>Date du rendez-vous</mat-label>
+                    <input name="date_rdv" [(ngModel)]="date_rdv" matInput placeholder="date" type="date" required>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Heure du rendez-vous</mat-label>
+                    <input name="heure_rdv" [(ngModel)]="heure_rdv" matInput placeholder="heure" type="time" required>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Lieu du rendez-vous</mat-label>
+                    <input name="type_notification" [(ngModel)]="type_notification" matInput placeholder="Lieu"
+                        type="text" required>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+
+                <br />
+                <mat-form-field appearance="fill">
+                    <mat-label>Ajouter un mail de confirmation</mat-label>
+                    <textarea matInput name="mailMessage" [(ngModel)]="mailMessage"></textarea>
+                </mat-form-field>
+            </div>
+            <br /> <br />
+            <div class="row" style="text-align: right;">
+                <div class="col-7">
+                    <button (click)="onCloseToggleSidebar()" mat-raised-button color="warn">Annuler</button>
+                </div>
+                <div class="col-4">
+                    <button (click)="onControle_Etat_donnee()" mat-raised-button color="primary">Valider</button>
+                </div>
+
+            </div>
+        </div>
+
+
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+
+        <mat-toolbar color="primary">
+            <button (click)="goBack() " mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span>Détail Fiche Client</span>
+            <span class="example-spacer"></span>
+
+            <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                <mat-icon>assignment_ind</mat-icon>
+            </button>
+        </mat-toolbar>
+        <div style="width: 100%; padding: 15px; height: max-content; background-color: silver;">
+            <div class="row">
+                <div class="col-4">
+
+                    <mat-card>
+                        <mat-tab-group>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">account_box</mat-icon>
+                                    Informations Personnelles
+                                </ng-template>
+
+                                <div style="height: 98%;">
+                                    <div *ngIf="lead">
+                                        <br><br>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Etat du prospect en lead</mat-label>
+                                            <mat-select (selectionChange)="onControle_Etat()"
+                                                style="font-weight: bold;color: rgb(5, 5, 141);" name="etat_lead"
+                                                [(ngModel)]="etat_lead" disableRipple>
+                                                <!-- <mat-option value="Non assigné">Non assigné</mat-option> -->
+                                                <mat-option value="Nouveau">Nouveau</mat-option>
+                                                <mat-option value="NRP">NRP</mat-option>
+                                                <mat-option value="A relancer">A relancer</mat-option>
+                                                <mat-option value="En attente simulation">En attente simulation</mat-option>
+                                                <mat-option value="Simulation effective">Simulation effective</mat-option>
+                                                <mat-option value="Annulé pas intéressé">Annulé / Pas intéressé
+                                                </mat-option>
+                                                <mat-option value="Passé en confirmation">Valider passé en confirmation
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="commercial">
+                                        <br><br>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Etat du prospect en Rendez-vous </mat-label>
+                                            <mat-select (selectionChange)="onControle_Etat()"
+                                                style="font-weight: bold;color: rgb(5, 5, 141);" name="etat_lead"
+                                                [(ngModel)]="etat_lead" disableRipple>
+                                                <!-- <mat-option value="Non assigné">Non assigné</mat-option> -->
+                                                <!-- <mat-option value="Nouveau">Nouveau</mat-option> -->
+                                                <mat-option value="NRP">NRP</mat-option>
+                                                <mat-option value="Annulé pas intéressé">Annulé</mat-option>
+                                                <mat-option value="En attente">En attente </mat-option>
+                                                <mat-option value="A Relancé">A Relancer </mat-option>
+                                                <mat-option value="Rdv planifié">RDV planifié </mat-option>
+                                                <mat-option value="Pré-devis à envoyer">Pré-Devis à envoyer </mat-option>
+                                                <mat-option value="Post Pré-Devis">Post Pré-Devis </mat-option>
+                                                <mat-option value="En attente DPE">En attente DPE </mat-option>
+
+                                                <mat-option value="DPE planifié">DPE planifié</mat-option>
+                                                <mat-option value="Retour reçu DPE">Retour reçu DPE </mat-option>
+                                                <mat-option value="Devis à envoyé">Devis à envoyé
+                                                </mat-option>
+                                                <mat-option value="Post RDV">Post Devis / RDV </mat-option>
+                                                <mat-option value="Devis signé/ A installer">Devis signé/ A installer
+                                                </mat-option>
+                                               
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="installation">
+                                        <br><br>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Etat du prospect en installation</mat-label>
+                                            <mat-select (selectionChange)="onControle_Etat()"
+                                                style="font-weight: bold;color: rgb(5, 5, 141);" name="etat_lead"
+                                                [(ngModel)]="etat_lead" disableRipple>
+                                                <mat-option value="En attente">En attente aides</mat-option>
+                                                <mat-option value="Annulé">Annulé</mat-option>
+                                                <mat-option value="En attente paiement aides">En attente paiement aides</mat-option>
+                                                <mat-option value="Planifié">Planifié Installation</mat-option>
+                                                <mat-option value="Installation planifiée">Installation planifiée</mat-option>
+                                                <mat-option value="SAV">SAV </mat-option>
+                                                <mat-option value="Terminé payé ">Terminé payé </mat-option>
+                                                
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="regie">
+                                        <br><br>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Etat du prospect en Regie </mat-label>
+                                            <mat-select (selectionChange)="onControle_Etat()"
+                                                style="font-weight: bold;color: rgb(5, 5, 141);" name="etat_lead"
+                                                [(ngModel)]="etat_lead" disableRipple>
+                                                <!-- <mat-option value="Non assigné">Non assigné</mat-option> -->
+                                                <!-- <mat-option value="Nouveau">Nouveau</mat-option> -->
+                                                <mat-option value="NRP">NRP</mat-option>
+                                                <mat-option value="Annulé pas intéressé">Annulé</mat-option>
+                                                <mat-option value="Confirmé">Confirmer</mat-option>
+                                                <mat-option value="Repousser">Repousser</mat-option>
+                                                <mat-option value="Relancé">Relancé </mat-option>
+                                                <mat-option value="En attente">En attente </mat-option>
+                                                <mat-option value="signer">Signer</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div *ngIf="regie">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Statut du dossier </mat-label>
+                                            <mat-select style="font-weight: bold;color: rgb(90, 74, 2);"
+                                                name="statut_dossier" [(ngModel)]="statut_dossier" disableRipple>
+                                                <mat-option value="accepté"> Accepter </mat-option>
+                                                <mat-option value="en attente"> En attente </mat-option>
+                                                <mat-option value="Refusé"> Refusé </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Code client</mat-label>
+                                            <input name="id_clientparticulier_lead" readonly
+                                                [(ngModel)]="id_clientparticulier_lead" matInput placeholder="code"
+                                                required>
+                                            <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Date de création</mat-label>
+                                            <input name="reated_time" [(ngModel)]="created_time" matInput
+                                                placeholder="code" required>
+                                            <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type modèl</mat-label>
+                                            <mat-select style="font-weight: bold;color: rgb(5, 5, 141);"
+                                                name="type_modele" [(ngModel)]="type_modele" disableRipple>
+                                                <mat-option value="Modèle pompe à chaleur a 1€">Modèle pompe à chaleur a 1€ </mat-option>
+                                                <mat-option value="Modèle en reste à charge">Modèle en reste à charge </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Nom</mat-label>
+                                            <input name="nom" [(ngModel)]="nom" matInput placeholder="nom" required>
+                                            <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Prenom</mat-label>
+                                            <input name="prenom" [(ngModel)]="prenom" matInput placeholder="prenom"
+                                                required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Numéro fiscal</mat-label>
+                                            <input name="num_fisc" [(ngModel)]="num_fisc" matInput
+                                                placeholder="Numéro fiscal" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Référence de l’avis d’impôt </mat-label>
+                                            <input name="ref_avis_impot" [(ngModel)]="ref_avis_impot" matInput
+                                                placeholder="adresse" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Adresse</mat-label>
+                                            <input name="addresse" [(ngModel)]="addresse" matInput placeholder="adresse"
+                                                required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Code postal</mat-label>
+                                            <input name="cp" [(ngModel)]="cp" matInput placeholder="code postal"
+                                                required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Ville</mat-label>
+                                            <input name="ville" [(ngModel)]="ville" matInput placeholder="ville"
+                                                required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Zone</mat-label>
+                                            <mat-select name="zone" [(ngModel)]="zone"
+                                                style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                <div *ngFor="let data of zone_choix">
+                                                    <mat-option value="{{data.zonage}}">{{data.zonage }}
+                                                        ({{ data.nom_commune }})</mat-option>
+                                                </div>
+
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Téléphone</mat-label>
+                                            <input name="telephone" [(ngModel)]="telephone" matInput
+                                                placeholder="téléphone" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input name="email" [(ngModel)]="email" matInput placeholder="email"
+                                                required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Nombre de personne dans le foyer</mat-label>
+                                            <input name="nbre_personne_foyer" [(ngModel)]="nbre_personne_foyer" matInput
+                                                type="number" placeholder="nomber personne" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Statut marital</mat-label>
+                                            <mat-select style="font-weight: bold;color: rgb(5, 5, 141);"
+                                                name="statut_marital" [(ngModel)]="statut_marital" disableRipple>
+                                                <mat-option value="célibataire">Célibataire </mat-option>
+                                                <mat-option value="concubinage">Concubinage</mat-option>
+                                                <mat-option value="concubinage">Mariée</mat-option>
+                                                <mat-option value="veuf">Veuf</mat-option>
+                                                <mat-option value="divorcé">Divorcé</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Revenue Fiscal de référence </mat-label>
+                                            <input name="commentaire_confirmateur"
+                                                [(ngModel)]="commentaire_confirmateur" matInput
+                                                placeholder="Revenue Fiscal de référence" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>précarité</mat-label>
+                                            <mat-select style="font-weight: bold;color: rgb(5, 5, 141);"
+                                                name="precarite" [(ngModel)]="precarite" disableRipple>
+                                                <mat-option value="GP">GP</mat-option>
+                                                <mat-option value="P">P</mat-option>
+                                                <mat-option value="CL">CL</mat-option>
+                                                <mat-option value="CL+">CL+</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Propriétaire/Locataitaire</mat-label>
+                                            <mat-select style="font-weight: bold;color: rgb(5, 5, 141);"
+                                                name="proprietaire_ou_locataire" [(ngModel)]="proprietaire_ou_locataire"
+                                                disableRipple>
+                                                <mat-option value="proprietaire">Propriétaire</mat-option>
+                                                <!-- <mat-option value="Nouveau">Nouveau</mat-option> -->
+                                                <mat-option value="locataire">Locataire</mat-option>
+                                            </mat-select>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type de logement </mat-label>
+                                            <input name="type_de_logement" [(ngModel)]="type_de_logement" matInput
+                                                placeholder="Type de logement" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Statut professionnel </mat-label>
+                                            <input name="statut_professionnel" [(ngModel)]="statut_professionnel"
+                                                matInput placeholder="Statut professionnel" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Système chauffage principal </mat-label>
+                                            <input name="systeme_chauffage_principal"
+                                                [(ngModel)]="systeme_chauffage_principal" matInput
+                                                placeholder="Systeme chauffage principal" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Adresse du chantier</mat-label>
+                                            <input name="adresse_chantier" [(ngModel)]="adresse_chantier" matInput
+                                                placeholder="Adresse du chantier" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Domaine activite </mat-label>
+                                            <input name="domaine_activite" [(ngModel)]="domaine_activite" matInput
+                                                placeholder="Domaine activite" required>
+                                           
+                                        </mat-form-field>
+                                    </div> -->
+                                    <!-- <div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Type de travaux </mat-label>
+                                    <input  name="type_travaux" [(ngModel)]="type_travaux" matInput placeholder="Type travaux"  required >
+                                  
+                                </mat-form-field>
+                            </div> -->
+                                    <!-- <div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Numéro de dossier</mat-label>
+                                    <input name="email"  matInput placeholder="numéro de dossier"  required >
+                                   
+                                </mat-form-field>
+                            </div> -->
+                                    <br>
+                                    <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+                                    <br>
+                                    <button style="color: red;background-color: wheat;margin: 15px;" mat-button
+                                        mat-dialog-close>Annuler</button>
+                                    <!-- <button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Ajouter le client</button> -->
+                                    <button *ngIf="lead" [swal]="deleteSwal" (confirm)="onClientUpdate_lead()"
+                                        mat-raised-button color="primary">Enregistrer les modifications</button>
+                                    <button *ngIf="commercial" [swal]="deleteSwal"
+                                        (confirm)="onClientUpdate_commercial()" mat-raised-button
+                                        color="primary">Enregistrer les modifications</button>
+                                    <button *ngIf="installation" [swal]="deleteSwal"
+                                        (confirm)="onClientUpdate_installation()" mat-raised-button
+                                        color="primary">Enregistrer les modifications</button>
+
+                                    <button *ngIf="regie" [swal]="deleteSwal" (confirm)="onClientUpdate_commercial()"
+                                        mat-raised-button color="primary">Enregistrer les modifications</button>
+
+                                </div>
+
+                            </mat-tab>
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">event_note</mat-icon>
+                                    Historiques traitement
+                                </ng-template>
+                                <table style="height: 98%;" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Etat</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Agent</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of data_historique">
+                                            <th scope="row">{{data.id}}</th>
+                                            <td style="color: rgb(9, 9, 155);">{{data.action}}</td>
+                                            <td style="font-size: 12px;">{{data.date  | date: 'dd/MM/yyyy, hh:mm'}}</td>
+                                            <td>{{data.user_id}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </mat-card>
+                </div>
+
+
+
+                <div class="col-8">
+                    <mat-card>
+                        <mat-tab-group>
+                            <mat-tab *ngIf="installation">
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">timeline</mat-icon>
+                                    Etape de traitement
+                                </ng-template>
+                                <div style="background-color: beige;padding: 10px;">
+                                    <p>Etatpes de traitement du dossier client</p>
+
+                                    <div>
+                                        <app-gestion-etape-traitement></app-gestion-etape-traitement>
+                                    </div>
+                                    <br>
+                                    <br> <br>
+                                    <!-- <div class="row">   
+                                    <div class="col">
+                                        <mat-card class="example-card">
+                                            <mat-card-header>
+                                                <mat-card-subtitle>Affectation des Etapes aux Agents </mat-card-subtitle>
+                                            </mat-card-header>           
+                                            <mat-card-content>
+                                                <div>
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                          <tr style="background-color: lightgrey;">
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Libellé</th>
+                                                            <th scope="col">Action</th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                          <tr>
+                                                            <th scope="row">
+                                                                <mat-checkbox  color="primary" class="example-margin"></mat-checkbox>
+                                                            </th>
+                                                            <td>Mark</td>
+                                                            <td>Mark SRGTDTE 3446UHGDKJ JKII</td>
+                                                          </tr>
+                                                          <tr>
+                                                            <th scope="row">
+                                                                <mat-checkbox  color="primary" class="example-margin"></mat-checkbox>
+                                                            </th>
+                                                            <td>Jacob</td>
+                                                            <td>Mark XFFG989896123IOIOIDTG  OKUJD</td>
+                                                          </tr>
+                                                          <tr>
+                                                            <th scope="row">
+                                                                <mat-checkbox  color="primary" class="example-margin"></mat-checkbox>
+                                                            </th>
+                                                            <td colspan="1">Larry the Bird</td>
+                                                            <td>Mark 3543  ?789 DGD I8O90DFG DGEDR</td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                </div>                           
+                                            </mat-card-content>
+                                            <mat-card-actions>
+                                                <button style="background-color: chartreuse;" *ngIf="actionControl == 'administration'" mat-stroked-button
+                                            [matMenuTriggerFor]="animals">Affecter ces etapes à un agent</button>
+                                             <mat-menu #animals="matMenu">
+                                              <div *ngFor="let data of datas_agent">
+                                                <button  mat-menu-item><span matBadge="{{data.nbre_tache}}"
+                                                        matBadgeColor="accent" matBadgeOverlap="false"> {{data.prenom}} {{data.nom}}</span></button>
+                                              </div>
+                                             </mat-menu>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div>
+                                  
+                                </div> -->
+
+                                    <br> <br>
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">construction</mat-icon>
+                                    Chantier
+                                </ng-template>
+                                <br>
+                                <div>
+                                    <mat-card style="background-color: cornsilk;">
+                                        <h5> Chantier client : </h5>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Catégorie sociale</mat-label>
+                                                    <mat-select name="categorie_sociale" [(ngModel)]="categorie_sociale"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="A">Grand précaire</mat-option>
+                                                        <mat-option value="B1">Précaire</mat-option>
+                                                        <mat-option value="B2">Classic</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+
+                                            </div>
+
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Mode de chauffage</mat-label>
+                                                    <mat-select name="mode_chauffage" [(ngModel)]="mode_chauffage"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="Poile à boi">Poele à bois</mat-option>
+                                                        <mat-option value="Chaudière gaz">Chaudière gaz</mat-option>
+                                                        <mat-option value="Chaudière fiou"> Chaudière fioul</mat-option>
+                                                        <mat-option value="PAC">PAC</mat-option>
+                                                        <mat-option value="Radiateur électrique"> Radiateur électrique
+                                                        </mat-option>
+                                                        <mat-option value="Autre">Autre</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                          
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label></mat-label>
+                                                    <mat-select name="commentaire_finacement" [(ngModel)]="commentaire_finacement"
+                                                        style="font-weight: bold;color: rgb(108, 108, 204);" multiple disableRipple>
+                                                        <mat-option value="SS">SS</mat-option>
+                                                        <mat-option value="RDC">RDC</mat-option>
+                                                        <mat-option value="Etage"> Etage(s)</mat-option>
+    
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                              
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Mode de chauffage ECS </mat-label>
+                                                    <input name="designation" [(ngModel)]="designation"
+                                                        type="text" matInput placeholder="Mode de chauffage ECS">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Surface à chauffer</mat-label>
+                                                    <input name="surface_chauffee" [(ngModel)]="surface_chauffee"
+                                                        type="number" matInput placeholder="Surface m²">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Revenus du foyer </mat-label>
+                                                    <mat-select name="ref_dossier_CEE" [(ngModel)]="ref_dossier_CEE"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="GP">GP</mat-option>
+                                                        <mat-option value="P">P</mat-option>
+                                                        <mat-option value="INT"> Int</mat-option>
+                                                        <mat-option value="CL"> CL</mat-option>
+    
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label> Combles isolés – 5ans </mat-label>
+                                                    <mat-select name="ref_payement" [(ngModel)]="ref_payement"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="OUI">OUI</mat-option>
+                                                        <mat-option value="NON">NON</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+
+                                        </div>
+                                        <br>
+
+                                        <h5>
+                                            <mat-icon mat-list-icon>info</mat-icon> Infos Fiscales :
+                                        </h5>
+                                        <div class="col">
+                                            <button (click)="openDialog_info()" mat-raised-button
+                                                style="background-color: cornsilk;">
+                                                <mat-icon mat-list-icon>add_comment</mat-icon> Ajouter
+                                            </button>
+                                            <br>
+
+                                            <div class="example-container">
+                                                <div class="example-header">
+                                                    <mat-form-field>
+                                                        <input matInput (keyup)="applyFilter($event.target.value)"
+                                                            placeholder="Chercher">
+                                                    </mat-form-field>
+                                                </div>
+                                                <mat-table [dataSource]="dataSource" matSort>
+
+                                                    <!-- ID Column -->
+                                                    <ng-container matColumnDef="num_fisc">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> num_fisc
+                                                        </mat-header-cell>
+                                                        <mat-cell *matCellDef="let row"> {{row.num_fisc}} </mat-cell>
+                                                    </ng-container>
+
+                                                    <!-- ID Column -->
+                                                    <ng-container matColumnDef="ref">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header
+                                                            style="text-align: left;"> ref </mat-header-cell>
+                                                        <mat-cell *matCellDef="let row"> {{row.ref}} </mat-cell>
+                                                    </ng-container>
+                                                    <!-- ID Column -->
+                                                    <ng-container matColumnDef="avis">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header
+                                                            style="text-align: left;"> avis </mat-header-cell>
+                                                        <mat-cell *matCellDef="let row"> {{row.avis}} </mat-cell>
+                                                    </ng-container>
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="intitule">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> intitule
+                                                        </mat-header-cell>
+                                                        <mat-cell *matCellDef="let row"> {{row.intitule}} </mat-cell>
+                                                    </ng-container>
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="description">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> description
+                                                        </mat-header-cell>
+                                                        <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+                                                    </ng-container>
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="id_client">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> supprimer
+                                                        </mat-header-cell>
+                                                        <mat-cell *matCellDef="let row"> <button [swal]="deleteSwal"
+                                                                (confirm)="onGet_Delete_Infos_Fiscales(row.id)"
+                                                                mat-icon-button class="example-icon"
+                                                                aria-label="Example icon-button with share icon">
+                                                                <mat-icon>delete_outline</mat-icon>
+                                                            </button> </mat-cell>
+                                                    </ng-container>
+
+
+                                                    <mat-header-row *matHeaderRowDef="displayedColumns">
+                                                    </mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                                                    </mat-row>
+                                                </mat-table>
+
+
+                                                <mat-paginator [pageSizeOptions]="[2, 3, 5]" showFirstLastButtons>
+                                                </mat-paginator>
+
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Revenu fiscal</mat-label>
+                                                    <input name="revenu_fiscal" type="number"
+                                                        [(ngModel)]="revenu_fiscal" matInput
+                                                        placeholder="revenu fiscal">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>nombre de foyer(s) </mat-label>
+                                                    <input name="nbre_foyers" [(ngModel)]="nbre_foyers" type="number"
+                                                        matInput placeholder="nombre de foyers">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Nature occupation</mat-label>
+                                                    <mat-select name="nature_occupation" [(ngModel)]="nature_occupation"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="Propriétaire">Propriétaire</mat-option>
+                                                        <mat-option value="Locataire">Locataire</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Type de bien</mat-label>
+                                                    <mat-select name="type_bien" [(ngModel)]="type_bien"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="indi*">individuel</mat-option>
+                                                        <mat-option value="familial">familial</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Salarié secteur privé</mat-label>
+                                                    <mat-select name="salarie_prive" [(ngModel)]="salarie_prive"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="oui">oui</mat-option>
+                                                        <mat-option value="non">non</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label> montant de la simulation </mat-label>
+                                                    <input name="consommation_annuelle"
+                                                        [(ngModel)]="consommation_annuelle" type="number" matInput
+                                                        placeholder="en £" required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>proposition à 1€ </mat-label>
+                                                    <mat-select name="credit_impot" [(ngModel)]="credit_impot"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="oui">oui</mat-option>
+                                                        <mat-option value="nom">non</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Année de construction</mat-label>
+                                                    <input name="credit_en_cours" [(ngModel)]="credit_en_cours"
+                                                        type="number" matInput placeholder="année">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+   
+                                        <h5>
+                                            <mat-icon mat-list-icon>location_on</mat-icon> Adresse Chantier :
+                                        </h5>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Adresse chantier</mat-label>
+                                                    <input name="adresse_chantier" [(ngModel)]="adresse_chantier"
+                                                        type="text" matInput placeholder="adresse chantier">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Complément adresse</mat-label>
+                                                    <input name="complement_adresse" [(ngModel)]="complement_adresse"
+                                                        type="text" matInput placeholder="compl. adresse">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Code postal</mat-label>
+                                                    <input name="code_postal" [(ngModel)]="code_postal" type="number"
+                                                        matInput placeholder="code postal">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+
+                                        </div>
+
+                                        <br>
+                                        <hr style="color: ivory;">
+                                        <h5> Informations obligatoires : </h5>
+                                        <hr style="color: ivory;">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Type de système en place</mat-label>
+                                                    <mat-select name="type_systeme" required [(ngModel)]="type_systeme"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple
+                                                        required>
+                                                        <mat-option value="5">chaudière fioul</mat-option>
+                                                        <mat-option value="20">20%</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Marque/modèle du matériel à démonter</mat-label>
+                                                    <input name="type_mat_demonte" [(ngModel)]="type_mat_demonte"
+                                                        type="text" matInput
+                                                        placeholder="marque/modèle du matériel à démonté" required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Travaux à effectuer </mat-label>
+                                                    <input name="mail" [(ngModel)]="mail"
+                                                        type="text" matInput
+                                                        placeholder="marque/modèle du matériel à démonté" required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <hr style="color: ivory;">
+                                        <h5>Dimensionnement de la pompe à chaleur</h5>
+                                        <hr style="color: ivory;">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Hauteur planfond en m</mat-label>
+                                                    <input name="hauteur_plafond" [(ngModel)]="hauteur_plafond"
+                                                        type="number" matInput placeholder="hauteur planfond en m"
+                                                        required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Altitude en m</mat-label>
+                                                    <input name="altitude" [(ngModel)]="altitude" type="number" matInput
+                                                        placeholder="altitude en m">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Température moyenne chauffage en C°</mat-label>
+                                                    <input name="temp_moyenne_chauffage"
+                                                        [(ngModel)]="temp_moyenne_chauffage" type="numbre" matInput
+                                                        placeholder="Température moyenne chauffage en C°">
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Combles isolés</mat-label>
+                                                    <mat-select name="combles_isoles" [(ngModel)]="combles_isoles"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="5">oui</mat-option>
+                                                        <mat-option value="20">non</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Sous sol isolé</mat-label>
+                                                    <mat-select name="sous_sol_isole" [(ngModel)]="sous_sol_isole"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="5">oui</mat-option>
+                                                        <mat-option value="20">non</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Année de construction</mat-label>
+                                                    <mat-select name="annee_construction" required
+                                                        [(ngModel)]="annee_construction"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="2000">avant 2000</mat-option>
+                                                        <mat-option value="1980">avant 1980</mat-option>
+                                                        <mat-option value="1960">avant 1960</mat-option>
+                                                        <mat-option value="1940">avant 1940</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>VMC</mat-label>
+                                                    <mat-select name="vmc" [(ngModel)]="vmc"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="Planifié">Oui</mat-option>
+                                                        <mat-option value="En attente">Non</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Nombre de chauffage</mat-label>
+                                                    <input name="nbre_chauffage" [(ngModel)]="nbre_chauffage"
+                                                        type="number" matInput placeholder="nombre de chauffage"
+                                                        required>
+
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Taille des chauffages</mat-label>
+                                                    <input name="taille_chauffages" [(ngModel)]="taille_chauffages"
+                                                        type="number" matInput placeholder="taille des chauffages"
+                                                        required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Type pompe</mat-label>
+                                                    <mat-select name="type_pompe" required [(ngModel)]="type_pompe"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="5">type1</mat-option>
+                                                        <mat-option value="20">type2</mat-option>
+                                                        <mat-option value="20">type3</mat-option>
+                                                        <mat-option value="20">type4</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Température de sortie de chaudière</mat-label>
+                                                    <input title="Température de sortie de chaudière en C°"
+                                                        name="temp_sortie_chaudiere" [(ngModel)]="temp_sortie_chaudiere"
+                                                        type="number" matInput placeholder="en C°" required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Epaisseur isolation murs extérieurs</mat-label>
+                                                    <input title="Epaisseur isolation murs extérieurs"
+                                                        name="epais_isolation_mur_ext"
+                                                        [(ngModel)]="epais_isolation_mur_ext" type="number" matInput
+                                                        placeholder="Epaisseur isolation murs extérieurs" required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Vitrage</mat-label>
+                                                    <mat-select name="vitrage" [(ngModel)]="vitrage"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="Simple vitrage">Simple vitrage</mat-option>
+                                                        <mat-option value="Double vitrage">Double vitrage</mat-option>
+                                                        <mat-option value="Triple vitrage">Triple vitrage</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Tableau électrique</mat-label>
+                                                    <mat-select name="tableau_electrique" required
+                                                        [(ngModel)]="tableau_electrique"
+                                                        style="font-weight: bold;color: rgb(5, 5, 141);" disableRipple>
+                                                        <mat-option value="Monophasé">Monophasé</mat-option>
+                                                        <mat-option value="Biphasé">Biphasé</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                               
+                                        </div>
+                                        <hr style="color: ivory;">
+                                        <h5>
+                                            <mat-icon mat-list-icon>euro_symbol</mat-icon>Informations de paiement
+                                        </h5>
+                                        <hr style="color: ivory;">
+                                        <div class="row">
+                                            <div class="col-3"><br>
+                                                <mat-checkbox class="example-margin" name="paiement_comptant"
+                                                    [(ngModel)]="paiement_comptant">Paiement comptant</mat-checkbox>
+                                            </div>
+                                            <div class="col-3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Montant de l'acompte</mat-label>
+                                                    <input name="montant_acompte" [(ngModel)]="montant_acompte"
+                                                        type="number" matInput placeholder="en £" required>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Informations sur le paiement</mat-label>
+                                                    <textarea name="infos_paiement" [(ngModel)]="infos_paiement"
+                                                        style="border:1px solid lightcoral;" cols="20" rows="10"
+                                                        matInput></textarea>
+                                                    <!-- <mat-hint>Hint</mat-hint> -->
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                    </mat-card>
+                                </div>
+                            </mat-tab>
+
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">chat</mat-icon>
+                                    Commentaire
+                                </ng-template>
+                                <br /><br />
+                                <p>Commentaires commerciaux</p>
+                                <mat-card>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Etat</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Commentaire</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of data_historique">
+                                                <th scope="row">{{data.id}}</th>
+                                                <td style="color: rgb(9, 9, 155);">{{data.action}}</td>
+                                                <td style="font-size: 12px;">{{data.date  | date: 'dd/MM/yyyy, hh:mm'}}
+                                                </td>
+                                                <td>{{data.commentaire}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br><br>
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Nouveau commentaire ou Contenu Mail</mat-label>
+                                        <textarea name="commentaire" [(ngModel)]="commentaire" matInput
+                                            placeholder="Votre commentaire ou mail ici..."></textarea>
+                                    </mat-form-field>
+                                    <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+                                    <br>
+                                    <button *ngIf="actionControl != 'regie_ext'" (click)="onPostClients_Email_Send()"
+                                        style="color: rgb(61, 3, 155);background-color: wheat;margin: 15px;" mat-button
+                                        mat-dialog-close>Envoyer un email au client</button> <span
+                                        class="example-spacer"></span>
+                                    <!-- <button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Ajouter le client</button> -->
+                                    <button *ngIf="actionControl != 'regie_ext'" (click)="onPostClients_Commentaires()"
+                                        mat-raised-button color="primary">Ajouter un commentaire</button>
+                                </mat-card>
+                            </mat-tab>
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">location_on</mat-icon>
+                                    Localisation
+                                </ng-template>
+
+                                <p>Localisation client/prospect</p>
+                                <!-- <img
+                                         src="https://lvdneng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2020/02/06/node_706126/45301807/public/2020/02/06/B9722496544Z.1_20200206160644_000%2BGR7FFB0KV.1-0.jpg?itok=UEAQHrQD1581001610">
+                                    -->
+                                <!-- <agm-map [latitude]='lat' [longitude]='long' >                   
+                                    <agm-marker 
+                                        [latitude]="lat" 
+                                        [longitude]="long">    
+                                    </agm-marker>                   
+                                    </agm-map> -->
+                                <google-map height="520px" width="98%" [zoom]="zoom">
+                                    <map-marker> </map-marker>
+                                </google-map>
+
+
+                            </mat-tab>
+                            <mat-tab *ngIf=" ! lead">
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">insert_invitation</mat-icon>
+                                    Rendez-vous
+                                </ng-template>
+                                <br />
+                                <div class="row">
+                                    <div class="col-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label> Date rendez-vous </mat-label>
+                                            <input [(ngModel)]="date_rdv" type="date" matInput placeholder="date"
+                                                required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Heure du rendez-vous </mat-label>
+                                            <input name="heure_rdv" [(ngModel)]="heure_rdv" matInput type="time"
+                                                placeholder="Heure du rendez-vous" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Motif du rendez-vous</mat-label>
+                                            <input name="motif_rendezVous" [(ngModel)]="motif_rendezVous" matInput
+                                                placeholder="Motif du rendez-vous" type="text" required>
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-3">
+                                        <br />
+                                        <button (click)="onRendez_vous_post()" mat-raised-button
+                                            color="primary">Enregistrer le rendez-vous</button>
+                                    </div>
+                                </div>
+                                <br />
+                                <mat-card>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Date du rendez-vous</th>
+                                                <th scope="col">Heure du rendez-vous</th>
+                                                <!-- <th scope="col">Lieu du rendez-vous</th> -->
+                                                <th scope="col">Motif du rendez-vous</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of datas_rendezVous">
+                                                <th scope="row">{{data.id}}</th>
+                                                <td style="color: rgb(9, 9, 155);">
+                                                    {{data.date_rdv | date: 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td style="font-size: 12px;">{{data.heure_rdv }}</td>
+                                                <!-- <td>{{type_notification}}</td> -->
+                                                <td>{{data.commentaire}}</td>
+                                                <td> <button [swal]="deleteSwal"
+                                                    (confirm)="onGet_Delete_Client_RendezVous(data)" mat-icon-button
+                                                    class="example-icon"
+                                                    aria-label="Example icon-button with share icon">
+                                                    <mat-icon>delete_outline</mat-icon>
+                                                </button> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </mat-card>
+                            </mat-tab>
+                            <mat-tab *ngIf=" ! lead">
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">file_copy</mat-icon>
+                                    Documents
+                                </ng-template>
+
+                                <div class="row">
+                                    <div class="col-4" style="text-align: left;padding: 20px;">
+                                        <p>Documents client/prospect</p>
+                                    </div>
+                                    <div style="text-align: right;padding-top: 25px;" class="col-3">
+                                        <button *ngIf="actionControl != 'regie_ext'"
+                                            style="background-color: darkorange;color: white;" mat-button
+                                            [matMenuTriggerFor]="exportDoc">Exporter les Données</button>
+                                        <mat-menu #exportDoc="matMenu">
+                                            <button mat-menu-item (click)="onPDF_Generate()">Afficher en PDF</button>
+                                            <button mat-menu-item>Télécharger</button>
+                                            <button mat-menu-item>Imprimer</button>
+                                        </mat-menu>
+
+                                    </div>
+                                    <div style="text-align: right;padding: 25px;" class="col-4">
+                                        <button *ngIf="actionControl != 'regie_ext'" mat-raised-button
+                                            [matMenuTriggerFor]="document" color="primary">Enregistrer les
+                                            documents</button>
+
+                                        <mat-menu #document="matMenu">
+                                            <div *ngFor="let data of Categorie_doc ">
+                                                <button (click)="onDocuments_Upload(data.nom)"
+                                                    mat-menu-item>{{data.nom}}</button>
+                                            </div>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+                                <br>
+
+                                <ngx-dropzone class="import_fiche" style="height: 220px" (change)="onSelect($event)">
+                                    <ngx-dropzone-label>Glissez vos fichiers a ajouter ici.</ngx-dropzone-label>
+                                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true"
+                                        (removed)="onRemove(f)">
+                                        <ngx-dropzone-label style="font-size: 12px;"> {{ f.name }} </ngx-dropzone-label>
+                                    </ngx-dropzone-preview>
+                                </ngx-dropzone>
+
+                                <br> <br>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Catégorie</th>
+                                            <th scope="col">Nom document</th>
+                                            <th scope="col">Type de fichier</th>
+                                            <th scope="col">Aperçu</th>
+                                            <th scope="col">Télécharger</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of documents_Data">
+                                            <td>{{data.id}}</td>
+                                            <td>{{data.categorie}}</td>
+                                            <td>{{data.fileName}}</td>
+                                            <td>{{data.fileType}}</td>
+                                            <td> <button (click)="onDocument_Download(data)" mat-icon-button
+                                                    color="primary" class="example-icon"
+                                                    aria-label="Example icon-button with share icon">
+                                                    <mat-icon>remove_red_eye</mat-icon>
+                                                </button> </td>
+                                            <td> <button (click)="onDocument_Download_All(data)" mat-icon-button
+                                                    class="example-icon"
+                                                    aria-label="Example icon-button with share icon">
+                                                    <mat-icon>cloud_download</mat-icon>
+                                                </button> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-tab>
+
+                            <mat-tab *ngIf=" ! lead">
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">create</mat-icon>
+                                    Devis
+                                </ng-template>
+                                <br> <br>
+
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p> Edition des devis et factures </p>
+                                    </div>
+                                    <div *ngIf="data_devis_statut" class="col-sm">
+                                        <!-- <button (click)="onDevis_Generate_annuler()"
+                                            style="background-color: rgb(247, 164, 104);"
+                                            mat-raised-button>Annuler</button> -->
+                                              <button (click)="onDevis_Generate('facture')" mat-raised-button
+                                            color="primary">Générer une facture</button>
+                                    </div>
+                                    <div *ngIf="data_devis_statut" class="col-sm">
+                                        <button (click)="onDevis_Generate('devis')" mat-raised-button
+                                            color="primary">Enregistrer le devis</button>
+                                    </div>
+                                </div>
+                                <!-- src="http://crm-front-prothermo.faseya-dev.com/assets/imgs/Logoprothermo.png" -->
+                                <br><br><br>
+                                <div id="htmlData" #htmlData>
+                                    <div class="row" *ngIf="data_devis_statut">
+                                        <div class="col-5">
+                                            <img height="140" style="text-align: left;"
+                                               src="../../../logo.png" >
+                                            <br><br>
+                                            <h5>Adresse du chantier : {{adresse_chantier}} </h5>
+                                            <h5>Commercial : {{commercial_user}} </h5>
+                                            <h5>Nombre de personne dans le foyer : {{nbre_personne_foyer}}</h5>
+                                            <h5>Statut du ménage: {{precarite}}</h5>
+                                        </div>
+                                        <div class="col">
+
+                                        </div>
+                                        <div class="col-5">
+                                            <br>
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Devis N°:</td>
+                                                        <td><input style="border-width: 0px;" [(ngModel)]="devis_numero"
+                                                                matInput required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ID Client :</td>
+                                                        <td><input style="border-width: 0px;"
+                                                                [(ngModel)]="id_clientparticulier_lead" matInput
+                                                                required></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Date de devis :</td>
+                                                        <td><input style="border-width: 0px;" type="date"
+                                                                [(ngModel)]="date_devis_start" matInput required></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Devis valable jusqu'au :</td>
+                                                        <td><input style="border-width: 0px;" type="date"
+                                                                [(ngModel)]="date_devis_end" matInput required></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <br><br>
+                                            <h5 style="color: rgb(54, 26, 26);font-size: 25px;">{{nom }} {{ prenom}} </h5>
+                                            <h5>Adresse: {{addresse}}</h5>
+                                            <h5>CP: {{cp}}</h5>
+                                            <h5>Tél: {{telephone}}</h5>
+                                            <h5>Mail: {{email}}</h5>
+                                        </div>
+                                    </div>
+                                    <br> <br>
+                                    <div class="row">
+                                        <div class="col-sm">                                         
+                                            <mat-form-field appearance="fill" >
+                                                <mat-select [disableOptionCentering]="true" #select1 placeholder="Choisir un Article">
+                                                    <mat-select-filter *ngIf="select1.focused" [array]="data_devis" [displayMember]="'nom'" (filteredReturn)="filteredList2 =$event"></mat-select-filter>
+                                                    <mat-option *ngFor="let data of filteredList2" [value]="data"  (click)="onProduits_selection(data)">
+                                                        {{data.nom }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>Choisir une aide</mat-label>
+                                                <mat-select name="aides_devis" [(ngModel)]="aides_devis"
+                                                    style="font-weight: bold;color: rgb(4, 4, 5);" multiple
+                                                    disableRipple>
+                                                    <div *ngFor="let data of datas_aide">
+                                                        <mat-option (click)="onAide_selection(data)" value="{{data}}">
+                                                            ({{ data.nom }}) {{data.montant}} €</mat-option>
+                                                    </div>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm">
+                                            <button *ngIf="data_devis_statut" (click)="onDevis_Generate_annuler()"
+                                            style="background-color: rgb(247, 164, 104);"
+                                            mat-raised-button>Annuler</button>
+                                        </div>
+                                    </div>
+                                    <br> <br>
+                                    <div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr *ngIf="data_devis_statut">
+
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Quantité</th>
+                                                    <th scope="col">TVA(%)</th>
+                                                    <th scope="col">Prix unitaire HT</th>
+                                                    <th scope="col">Prix HT</th>
+                                                    <th scope="col">Prix TTC</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of data_devis_push">
+                                                    <td style="width: max-content;">  <div [swal]="deleteProduit" (confirm)="onDelet_Produit_Devis(data)">
+                                                        {{data.description}}  </div> </td>
+                                                   
+                                                    <td style="width: 70px;">
+                                                        <input style="border-width: 0px;width: 50px;" type="number"
+                                                            (change)="onNgChange(data)" [(ngModel)]="data.qte" matInput
+                                                            required>
+                                                    </td>
+                                                    <td>
+                                                        <input style="border-width: 0px;" type="number"
+                                                            (change)="onNgChange(data)" [(ngModel)]="data.tva" matInput
+                                                            required>
+                                                    </td>
+                                                    <td style="width: 130px;">
+                                                        <input style="border-width: 0px;width: 75px;" type="number"
+                                                            (change)="onNgChange(data)"
+                                                            [(ngModel)]="data.prix_vente_ref" matInput required> €</td>
+                                                    <td style="width:100px">
+                                                        {{data.prix_ht}} €
+                                                    </td>
+                                                    <td style="color: darkviolet;width:100px"> {{data.prix_revient}} €
+                                                    </td>
+                                                    <!-- <td>  <button (click)="onDetail_Produit(data)" mat-icon-button color="primary" class="example-icon" aria-label="Example icon-button with share icon">
+                                        <mat-icon>edit</mat-icon>    
+                                      </button> </td>
+                                      <td >  <button  [swal]="deleteSwal"  (confirm)=" onGet_Delete_Produit(data)" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                                        <mat-icon>delete_outline</mat-icon>
+                                      </button> </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div>
+
+                                            <div style="border-style: solid;border-width: 1px;"
+                                                *ngIf="data_devis_statut">
+                                                <h3>Termes et conditions</h3>
+                                                <div *ngFor="let data of aides_devis_data">
+                                                    <h6>{{data.description}} {{data.montant}} €</h6>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div *ngIf="data_devis_statut"
+                                                style="border-style: solid;border-width: 1px;" class="row">
+                                                <div class="col">
+                                                    <h4>
+                                                        <br> <br>
+                                                        Date de visite préalable le {{date_visite}} <br />
+                                                        Apposer date et signature, précédées de la mention "bon pour
+                                                        accord"
+                                                    </h4>
+                                                    <div style="height: 160px;">
+                                                    </div>
+                                                    <div style="width: 200px;">
+                                                        le:
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <br>
+                                                    <table
+                                                        style="background-color: rgb(248, 241, 239);font-weight: 700;"
+                                                        class="table">
+
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>TOTAL HT</td>
+                                                                <td>{{sous_total}} €</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>TOTAL TVA </td>
+                                                                <td> {{tva_total}} €</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="background-color:rgb(239, 248, 225);">TOTAL
+                                                                    TTC</td>
+                                                                <td>{{total_devis}} €</td>
+                                                            </tr>
+
+
+                                                            <tr *ngFor="let data of aides_devis_data">
+                                                                <td>{{data.nom}}</td>
+                                                                <td> <input style="border-width: 0px;" type="number"
+                                                                        (change)="onAideChange()"
+                                                                        [(ngModel)]="data.montant" matInput required>
+                                                                </td>
+                                                            </tr>
+
+
+                                                            <tr
+                                                                style="background-color:rgb(2, 2, 49);color:white; font-size: 18px;font-weight: 500;">
+                                                                <td>Reste à charge</td>
+                                                                <td>{{reste_a_charge}} €</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br> <br>
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab *ngIf="actionControl == 'administration'">
+                                <ng-template mat-tab-label>
+                                    <mat-icon color="primary" class="example-tab-icon">person</mat-icon>
+                                    Affectation
+                                </ng-template>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <br>
+                                        <p>Gestion des affectations aux agents</p>
+                                    </div>
+                                    <div style="text-align: right;padding-top: 35px;" class="col">
+
+                                    </div>
+                                    <div style="text-align: right;padding: 35px;" class="col">
+                                        <button mat-stroked-button [matMenuTriggerFor]="animals"
+                                            style="background-color: rgb(19, 19, 134);color:white">Réaffecter ce client
+                                            à un agent</button>
+                                        <mat-menu #animals="matMenu">
+                                            <div *ngFor="let data of datas_agent">
+                                                <button (click)="onAffectation_client(data)" mat-menu-item><span
+                                                        matBadge="{{data.nbre_tache}}" matBadgeColor="accent"
+                                                        matBadgeOverlap="false"> {{data.prenom}}
+                                                        {{data.nom}}</span></button>
+                                            </div>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Prenom</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">suprimer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of data_list_agent_affecter">
+                                            <th scope="row">{{data.id_client}}</th>
+                                            <td style="color: rgb(9, 9, 155);">{{data.nom}}</td>
+                                            <td style="font-size: 12px;">{{data.prenom}}</td>
+                                            <td>{{data.email}}</td>
+                                            <td> <button [swal]="deleteSwal"
+                                                    (confirm)="onGet_Delete_Client_affecter(data)" mat-icon-button
+                                                    class="example-icon"
+                                                    aria-label="Example icon-button with share icon">
+                                                    <mat-icon>delete_outline</mat-icon>
+                                                </button> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-tab>
+
+                        </mat-tab-group>
+                    </mat-card>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</ng-sidebar-container>

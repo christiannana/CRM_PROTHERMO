@@ -1,0 +1,23 @@
+
+
+
+
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  p{
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px;
+    color: darkblue;
+    text-align: left;
+}
+
+input{
+    font-weight: bold;
+}
+mat-form-field{
+    color: rgb(15, 14, 11);
+    width: 97%;
+  
+}

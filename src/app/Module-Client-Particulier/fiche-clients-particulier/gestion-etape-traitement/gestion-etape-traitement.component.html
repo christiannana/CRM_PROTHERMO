@@ -1,0 +1,585 @@
+<div id="id01" class="modal">
+  <form class="modal-content animate" action="/action_page.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close"
+        title="Close Modal">&times;</span>
+      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" (click)="onDialo()" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+
+<div>
+  <mat-vertical-stepper [linear]="isLinear" #stepper>
+    <mat-step *ngIf="etape1" [stepControl]="firstFormGroup">
+      <ng-template matStepLabel> Prise de Rendez-vous</ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <h2>Mail type</h2>
+          <div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Mail type</mat-label>
+              <textarea name="mail" [(ngModel)]="mail" rows="6" matInput
+                placeholder="Information importante..."></textarea>
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info1" [(ngModel)]="info1" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape2" [stepControl]="secondFormGroup">
+      <ng-template matStepLabel>Envoyer le dossier à AMO</ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Nom AMO</mat-label>
+              <input  name="var1" [(ngModel)]="var1" matInput placeholder="AMO" required>
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div>
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <mat-form-field class="example-full-width">           
+              <mat-label>Information importante</mat-label>
+              <textarea name="info2" [(ngModel)]="info2" rows="6" matInput
+                placeholder="Information importante..."></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape3">
+      <ng-template matStepLabel>Etat du rendez-vous</ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Etat du prospect en Rendez-vous </mat-label>
+              <mat-select style="font-weight: bold;color: rgb(5, 5, 141);"
+                name="retour_rdv" [(ngModel)]="retour_rdv" disableRipple>
+                <mat-option value="NRP">NRP</mat-option>
+                <mat-option value="Annulé pas intéressé">Annulé</mat-option>
+                <mat-option value="Devis envoyé AIR/AIR">Devis envoyé AIR/AIR
+                </mat-option>
+                <mat-option value="Devis envoyé AIR/EAU">Devis envoyé AIR/EAU
+                </mat-option>
+                <mat-option value="Relancé">Relancé </mat-option>
+                <mat-option value="Devis signé/ A installer">Devis signé/ A installer
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div>
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <mat-form-field class="example-full-width">           
+              <mat-label>Information importante</mat-label>
+              <textarea name="info3" [(ngModel)]="info3" rows="6" matInput
+                placeholder="Information importante..."></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step *ngIf="etape4">
+      <ng-template matStepLabel>Livraison pompe à chaleur</ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Etape du dossier</mat-label>
+              <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="type_livraison"
+                [(ngModel)]="type_livraison" disableRipple>
+                <mat-option value="Pompe reçu par le client">Pompe reçu par le client</mat-option>
+                <mat-option value="pompe non livré">pompe non livré</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Lieu de livraison</mat-label>
+              <input name="commentaire_livraison" [(ngModel)]="commentaire_livraison" matInput placeholder="Lieu de livraison" required>
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info4" [(ngModel)]="info4" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape5">
+      <ng-template matStepLabel> Etat du dossier </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>dépot du dossier</mat-label>
+              <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="var2"
+                [(ngModel)]="var2" disableRipple>
+                <mat-option value="proprietaire">Dossier déposé</mat-option>
+                <mat-option value="Nouveau">Dossier non déposé</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info5" [(ngModel)]="info5" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape6">
+      <ng-template matStepLabel>Accompte action logement </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Reférence de virement</mat-label>
+              <input name="ref_virement_logement" [(ngModel)]="ref_virement_logement" matInput placeholder="Reférence de virement" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info6" [(ngModel)]="info6" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape7">
+      <ng-template matStepLabel>Commande fournisseur</ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Reférence produit</mat-label>
+              <input name="ref_produit" [(ngModel)]="ref_produit" matInput placeholder="Reférence produit" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Designation</mat-label>
+              <input name="var3" [(ngModel)]="var3" matInput placeholder="Designation" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Adresse du chantier</mat-label>
+              <input name="var4" [(ngModel)]="var4" matInput placeholder="Adresse du chantier" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info7" [(ngModel)]="info7" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape8">
+      <ng-template matStepLabel>Choix installateur</ng-template>
+      <div class="row">
+        <div class="col-sm">
+         
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Choix installateur</mat-label>
+              <input name="var5" [(ngModel)]="var5" matInput placeholder="Choix installateur" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info8" [(ngModel)]="info8" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape9">
+      <ng-template matStepLabel>En attente d'installation</ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Date installation</mat-label>
+              <input name="var6" [(ngModel)]="var6" matInput placeholder="Date installation" type="datetime" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info9" [(ngModel)]="info9" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape10">
+      <ng-template matStepLabel>Dossier CEE validé </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Etat du dossier</mat-label>
+              <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="var7"
+                [(ngModel)]="var7" disableRipple>
+                <mat-option value="Dossier validé">Dossier validé</mat-option>
+                <mat-option value="Dossier non validé">Dossier non validé</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info10" [(ngModel)]="info10" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape11">
+      <ng-template matStepLabel>Installation </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Tous les document edité</mat-label>
+              <input [(ngModel)]="var8"  matInput placeholder="Tous les document edité" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info11" [(ngModel)]="info11" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape12">
+      <ng-template matStepLabel>Mise en service effectuée </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label> Etat de l'installation </mat-label>
+              <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="var9"
+                [(ngModel)]="var9" disableRipple>
+                <mat-option value="Mise en service effectué">Mise en service effectué</mat-option>
+                <mat-option value="Mise en service non">Mise en service non</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info12" [(ngModel)]="info12" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape13">
+      <ng-template matStepLabel>Action paiement final </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Reférence virement</mat-label>
+              <input  name="ref_virement_accompte" [(ngModel)]="ref_virement_accompte" matInput placeholder="Reférence virement" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info13" [(ngModel)]="info13" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step  *ngIf="etape14">
+      <ng-template matStepLabel>Dossier CEE payé</ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Reférence virement</mat-label>
+              <input  name="ref_payement" [(ngModel)]="ref_payement" matInput placeholder="Reférence virement" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info14" [(ngModel)]="info14" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step *ngIf="etape15" [stepControl]="firstFormGroup">
+      <ng-template matStepLabel> Validation du lead en reste à charge </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <!-- <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Adresse mail</mat-label>
+              <input matInput placeholder="Adresse mail" required>
+            </mat-form-field>
+          </div> -->
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Identifiant prime renov</mat-label>
+              <input name="info21" [(ngModel)]="info21" matInput placeholder="Identifiant prime renov" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Reférence dossier CEE</mat-label>
+              <input name="ref_dossier_CEE" [(ngModel)]="ref_dossier_CEE" matInput placeholder="Reférence dossier CEE" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info15" [(ngModel)]="info15" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step *ngIf="etape16" [stepControl]="secondFormGroup">
+      <ng-template matStepLabel> Financement </ng-template>
+      <div class="row">
+        <div class="col-sm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Statut financement</mat-label>
+              <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="info20"
+                [(ngModel)]="info20" disableRipple>
+                <mat-option value="OUI">OUI</mat-option>
+                <mat-option value="NON">NON</mat-option>
+
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>N° dossier financement de la banque</mat-label>
+              <input name="info19" [(ngModel)]="info19"  matInput placeholder="Numéro banque" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Montant paiement comptant</mat-label>
+              <input name="info18" [(ngModel)]="info18" matInput placeholder="Montant paiement comptent" type="number" required>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+          </div>
+          <button (click)="onEtape_registration()" mat-raised-button color="primary">Enregistrer</button>
+        </div>
+        <div class="col-sm">
+          <div class="container">
+            <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+            <h2>Information importante</h2>
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Information importante</mat-label>
+                <textarea name="info16" [(ngModel)]="info16" rows="6" matInput
+                  placeholder="Information importante..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    
+
+  </mat-vertical-stepper>
+</div>
+
+
+
+
+
+
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+<!-- <div>
+  <mat-vertical-stepper [linear]="isLinear" #stepper>
+  
+
+  </mat-vertical-stepper>
+</div> -->

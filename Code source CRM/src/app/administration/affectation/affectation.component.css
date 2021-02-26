@@ -1,0 +1,29 @@
+p{
+    font-weight: bold;
+    font-size: 17px;
+    margin: 5px;
+    color: darkblue;
+}
+
+.mat-elevation-z8 {
+    width: 99%;
+    margin: 15px;
+  }
+table{
+     width: 100%;
+}
+.div_spinner{ 
+    padding-top: 35px;
+    height: 10px;
+}
+
+td{
+ width: auto;
+ overflow: hidden;
+ font-size: small;
+ margin: 0px;
+}
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  

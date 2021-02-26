@@ -1,0 +1,191 @@
+
+<swal
+#deleteSwal
+title="Confirmation"
+text="Voulez vous Enregistrer les modifications ?"
+icon="question"
+allowOutsideClick= "false"
+confirmButtonText = "Enregistrer"
+cancelButtonText = "Annuler"
+cancelButtonColor = "red"
+[showCancelButton]="true"
+[focusCancel]="true"
+>
+</swal>
+
+
+<mat-toolbar color="primary">
+    <button (click)="goBack() " mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Detail fiche agent</span>
+    <span class="example-spacer"></span>
+
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>assignment_ind</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div class="row">
+    <!-- <div class="col-3">
+       
+    </div> -->
+    <div  style="text-align: right;padding-top: 35px;" class="col-5">    
+        <mat-card>
+
+                
+        <mat-dialog-content class="mat-typography">
+        <p>Information sur l'agent</p>
+            <div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Identifiant agent</mat-label>
+                        <input disabled name="id" [(ngModel)]="id" matInput placeholder="Identifiant agent"  required >
+                        <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nom</mat-label>
+                        <input  name="nom" [(ngModel)]="nom" matInput placeholder="Nom"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Prenom</mat-label>
+                        <input  name="prenom" [(ngModel)]="prenom" matInput placeholder="Prenom"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input  name="email" [(ngModel)]="email" matInput placeholder="Email"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Login</mat-label>
+                        <input  name="username" [(ngModel)]="username" matInput placeholder="Login"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Adresse</mat-label>
+                        <input  name="adresse" [(ngModel)]="adresse" matInput placeholder="Adresse"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mot de passe</mat-label>
+                        <input  name="password" [(ngModel)]="password" matInput placeholder="Mot de passe" type="password"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Téléphone</mat-label>
+                        <input  name="telephone" [(ngModel)]="telephone" matInput placeholder="Téléphone"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fonction</mat-label>
+                        <input  name="fonction" [(ngModel)]="fonction" matInput placeholder="Fonction"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Equipe</mat-label>
+                        <input  name="equipe" [(ngModel)]="equipe" matInput placeholder="Equipe"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Poste</mat-label>
+                        <input  name="poste" [(ngModel)]="poste" matInput placeholder="Poste"  required >
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Role</mat-label>
+                        <mat-select style="font-weight: bold;color: rgb(5, 5, 141);" name="roles" [(ngModel)]="roles" disableRipple>
+                            <mat-option value="admin">admin</mat-option>
+                            <mat-option value="agent">agent</mat-option>
+                            <!--mat-option value="responsable">responsable</mat-option-->
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <br>
+                <mat-progress-bar *ngIf="progresse" mode="indeterminate"></mat-progress-bar>
+                <br> 
+        
+            </div>
+
+
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button style="color: red;background-color: wheat;margin: 15px;" mat-button mat-dialog-close>Annuler</button>
+            <!-- <button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Ajouter le client</button> -->
+            <button [swal]="deleteSwal" (confirm)="onAgent_Update()"   mat-raised-button color="primary">Enregistrer les modifications</button>
+        </mat-dialog-actions>
+                    
+        </mat-card>
+
+    </div>
+    <div style="padding: 35px;" class="col-7">
+       
+        <div class="row">
+            <div class="col">
+              <br>
+                <p>Gestion des affectations des etapes</p>
+            </div>
+            <div  style="text-align: right;padding-top: 35px;" class="col">
+                                               
+            </div>
+            <div style="text-align: right;padding: 35px;" class="col">
+                <button mat-stroked-button  [matMenuTriggerFor]="animals" style="background-color: rgb(19, 19, 134);color:white" >Affecter une etape à cet agent</button>
+              <mat-menu #animals="matMenu">
+                <div *ngFor="let data of data_etape">
+                    <button (click)="onAffectation_etape(data)" mat-menu-item><span matBadge="{{data.nbre_tache}}"
+                     matBadgeColor="accent" matBadgeOverlap="false"> {{data.nom}}</span></button>
+                </div>
+              </mat-menu>
+            </div>
+        </div>
+
+
+        <table class="table table-striped">
+            <thead>   
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom de l'etape</th>                 
+                    <th scope="col">suprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of datas_affectation">
+                    <th scope="row">{{data.id_user}}</th>
+                    <td style="color: rgb(9, 9, 155);">{{data.etape}}</td>                  
+                    <td> <button [swal]="deleteSwal" (confirm)="onGetDeleteEtape(data)" mat-icon-button
+                        class="example-icon" aria-label="Example icon-button with share icon">
+                        <mat-icon>delete_outline</mat-icon>
+                      </button> </td>
+                </tr>
+            </tbody>
+        </table>
+     
+     
+   </div>
+</div>

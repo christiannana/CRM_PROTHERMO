@@ -1,0 +1,61 @@
+
+
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  p{
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px;
+    color: darkblue;
+}
+
+input{
+    font-weight: bold;
+}
+mat-form-field{
+    color: rgb(15, 14, 11);
+    width: 97%;
+  
+}
+h5{
+    font-size: 15px; color: rgb(31, 8, 136);font-weight: 600;font-style: italic;
+}
+
+.import_fiche:hover{
+    background-color: rgb(244, 248, 192);
+}
+
+p{
+    font-weight: bold;
+    font-size: 17px;
+    margin: 40px;
+    color: darkblue;
+}
+
+.mat-elevation-z8 {
+    width: 99%;
+    margin: 15px;
+  }
+table{
+    width: 100%;
+}
+.div_spinner{
+    display: flex;
+    padding-top: 10%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+td{
+ width: auto;
+ overflow: hidden;
+ font-size: small;
+ margin: 0px;
+}
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+
