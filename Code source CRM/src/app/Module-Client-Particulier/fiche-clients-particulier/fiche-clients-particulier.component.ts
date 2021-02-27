@@ -1316,7 +1316,8 @@ export class FicheClientsParticulierComponent implements OnInit {
      data.prix_ht = data.prix_vente_ref * data.qte
      //  data.prix_ht = data.prix_vente_ref * data.qte
      data.prix_revient = (data.prix_vente_ref + data.tva_c) * data.qte;
-     data.prix_revient = +prix_revient.toFixed(2) ;
+     data.prix_revient = +prix_revient * data.qte;
+     data.prix_revient = +data.prix_revient.toFixed(2);
      data.prix_ht = +data.prix_ht.toFixed(2)
 
      let sous_totalF:number = 0;
